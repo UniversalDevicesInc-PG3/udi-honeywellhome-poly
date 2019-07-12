@@ -1,0 +1,505 @@
+openapi: "3.0.0"
+info:
+  version: "1.0.0"
+  title: "Honeywell Home"
+security:
+  - bearerAuth: []
+servers:
+  - url: https://api.honeywell.com
+    description: Production
+  - url: https://connectedhome-sandbox.apigee.net
+    description: Sandbox
+paths:
+  /v2/locations:
+    get:
+      summary: Get all locations, this will also return all devices within those locations
+      parameters:
+        - $ref: '#/components/parameters/ApiKey'
+        - $ref: '#/components/parameters/UserRefId'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/location'
+  #  /v2/devices:
+  #    get:
+  #      summary: Return all devices in a particular locationID
+  #      parameters:
+  #        - $ref: '#/components/parameters/ApiKey'
+  #        - $ref: '#/components/parameters/UserRefId'
+  #        - $ref: '#/components/parameters/LocationId'
+  #      responses:
+  #        200:
+  #          description: OK
+  #          content:
+  #            application/json:
+  #             schema:
+  #               type: array
+  #                items:
+  #                  # This actually isn't right as it can be more than just a thermostat
+  #                  $ref: '#/components/schemas/thermostat'
+  /v2/devices/thermostats:
+    get:
+      summary: Return all thermostats in a particular locationID
+      parameters:
+        - $ref: '#/components/parameters/ApiKey'
+        - $ref: '#/components/parameters/UserRefId'
+        - $ref: '#/components/parameters/LocationId'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/thermostat'
+  /v2/devices/thermostats/{deviceId}:
+    get:
+      summary: Return status of a thermostat
+      parameters:
+        - $ref: '#/components/parameters/ApiKey'
+        - $ref: '#/components/parameters/UserRefId'
+        - $ref: '#/components/parameters/LocationId'
+        - $ref: '#/components/parameters/DeviceId'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/thermostat'
+  /v2/devices/thermostats/{deviceId}/group/{groupId}/rooms:
+    get:
+      summary: Return status of sensors
+      parameters:
+        - $ref: '#/components/parameters/ApiKey'
+        - $ref: '#/components/parameters/UserRefId'
+        - $ref: '#/components/parameters/LocationId'
+        - $ref: '#/components/parameters/DeviceId'
+        - $ref: '#/components/parameters/GroupId'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/thermostatSensor'
+components:
+  headers:
+    UserRefId:
+      description: Your user ID
+      schema:
+        type: string
+      required: true
+  parameters:
+    DeviceId:
+      name: deviceId
+      description: Device ID
+      in: path
+      schema:
+        type: string
+      required: true
+    UserRefId:
+      name: UserRefId
+      description: Your user ID
+      in: header
+      schema:
+        type: string
+      required: true
+    ApiKey:
+      name: apikey
+      description: Your Client ID
+      in: query
+      schema:
+        type: string
+      required: true
+    LocationId:
+      name: locationId
+      description: Location ID
+      in: query
+      schema:
+        type: string
+      required: true
+    GroupId:
+      name: groupId
+      description: Group ID
+      in: path
+      schema:
+        type: integer
+      required: true
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+  schemas:
+    location:
+      type: object
+      properties:
+        locationID:
+          type: "integer"
+        name:
+          type: "string"
+        streetAddress:
+          type: "string"
+        city:
+          type: "string"
+        state:
+          type: "string"
+        country:
+          type: "string"
+        zipcode:
+          type: "string"
+        devices:
+          type: "array"
+          items:
+            type: object
+        users:
+          type: "array"
+          items:
+            type: "object"
+            properties:
+              userID:
+                type: "integer"
+              username:
+                type: "string"
+              firstname:
+                type: "string"
+              lastname:
+                type: "string"
+              created:
+                type: "number"
+              deleted:
+                type: "number"
+              activated:
+                type: "boolean"
+              connectedHomeAccountExists:
+                type: "boolean"
+              locationRoleMapping:
+                type: "array"
+                items:
+                  type: "object"
+                  properties:
+                    locationID:
+                      type: "integer"
+                    role:
+                      type: "string"
+                    locationName:
+                      type: "string"
+                    status:
+                      type: "integer"
+              isOptOut:
+                type: "string"
+              isCurrentUser:
+                type: "boolean"
+        timeZoneId:
+          type: "string"
+        timeZone:
+          type: "string"
+        ianaTimeZone:
+          type: "string"
+        daylightSavingTimeEnabled:
+          type: "boolean"
+        geoFences:
+          type: "array"
+          items:
+            type: "object"
+            properties:
+              geofenceEnabled:
+                type: "boolean"
+              geoFenceID:
+                type: "number"
+              latitude:
+                type: "number"
+              longitude:
+                type: "number"
+              radius:
+                type: "number"
+              geoOccupancy:
+                properties:
+                  withinFence:
+                    type: "number"
+                  outsideFence:
+                    type: "number"
+                type: "object"
+        geoFenceEnabled:
+          type: "boolean"
+        predictiveAIREnabled:
+          type: "boolean"
+        comfortLevel:
+          type: "number"
+        geoFenceNotificationEnabled:
+          type: "boolean"
+        geoFenceNotificationTypeId:
+          type: "number"
+        configuration:
+          properties:
+            faceRecognition:
+              properties:
+                enabled:
+                  type: "boolean"
+                maxPersons:
+                  type: "number"
+                maxEtas:
+                  type: "number"
+                maxEtaPersons:
+                  type: "number"
+                schedules:
+                  type: "array"
+                  items:
+                    type: "object"
+                    properties:
+                      time:
+                        type: "array"
+                        items:
+                          type: "object"
+                          properties:
+                            start:
+                              type: "string"
+                            end:
+                              type: "string"
+                      days:
+                        type: "array"
+                        items:
+                          type: "string"
+              type: "object"
+          type: "object"
+    thermostat:
+      type: object
+      properties:
+        groups:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: "integer"
+              name:
+                type: "string"
+              rooms:
+                type: array
+                items:
+                  type: integer
+        displayedOutdoorHumidity:
+          type: "integer"
+        vacationHold:
+          properties:
+            enabled:
+              type: "boolean"
+          type: "object"
+        currentSchedulePeriod:
+          properties:
+            day:
+              type: "string"
+            period:
+              type: "string"
+          type: "object"
+        scheduleCapabilities:
+          properties:
+            availableScheduleTypes:
+              type: "array"
+              items:
+                type: "string"
+            schedulableFan:
+              type: "boolean"
+          type: "object"
+        scheduleType:
+          properties:
+            scheduleType:
+              type: "string"
+            scheduleSubType:
+              type: "string"
+          type: "object"
+        scheduleStatus:
+          type: "string"
+        allowedTimeIncrements:
+          type: "integer"
+        settings:
+          properties:
+            hardwareSettings:
+              properties:
+                brightness:
+                  type: "integer"
+                maxBrightness:
+                  type: "integer"
+              type: "object"
+            fan:
+              properties:
+                allowedModes:
+                  type: "array"
+                  items:
+                    type: "string"
+                changeableValues:
+                  properties:
+                    mode:
+                      type: "string"
+                  type: "object"
+              type: "object"
+            temperatureMode:
+              properties:
+                air:
+                  type: "boolean"
+              type: "object"
+            specialMode:
+              properties:
+                autoChangeoverActive:
+                  type: "boolean"
+                emergencyHeatActive:
+                  type: "boolean"
+              type: "object"
+          type: "object"
+        deviceClass:
+          type: "string"
+        deviceType:
+          type: "string"
+        deviceID:
+          type: "string"
+        userDefinedDeviceName:
+          type: "string"
+        name:
+          type: "string"
+        isAlive:
+          type: "boolean"
+        isUpgrading:
+          type: "boolean"
+        isProvisioned:
+          type: "boolean"
+        macID:
+          type: "string"
+        deviceSettings:
+          properties: {}
+          type: "object"
+        units:
+          type: "string"
+        indoorTemperature:
+          type: "number"
+        outdoorTemperature:
+          type: "number"
+        allowedModes:
+          type: "array"
+          items:
+            type: "string"
+        deadband:
+          type: "number"
+        hasDualSetpointStatus:
+          type: "boolean"
+        minHeatSetpoint:
+          type: "number"
+        maxHeatSetpoint:
+          type: "number"
+        minCoolSetpoint:
+          type: "number"
+        maxCoolSetpoint:
+          type: "number"
+        changeableValues:
+          properties:
+            mode:
+              type: "string"
+            autoChangeoverActive:
+              type: "boolean"
+            emergencyHeatActive:
+              type: "boolean"
+            heatSetpoint:
+              type: "number"
+            coolSetpoint:
+              type: "number"
+            thermostatSetpointStatus:
+              type: "string"
+            nextPeriodTime:
+              type: "string"
+            endHeatSetpoint:
+              type: "number"
+            endCoolSetpoint:
+              type: "number"
+            heatCoolMode:
+              type: "string"
+          type: "object"
+        operationStatus:
+          properties:
+            mode:
+              type: "string"
+            fanRequest:
+              type: "boolean"
+            circulationFanRequest:
+              type: "boolean"
+          type: "object"
+    thermostatSensor:
+      properties:
+        deviceId:
+          type: "string"
+        groupId:
+          type: "integer"
+        rooms:
+          type: "array"
+          items:
+            type: "object"
+            properties:
+              id:
+                type: "integer"
+              name:
+                type: "string"
+              type:
+                type: "string"
+              avgTemperature:
+                type: "number"
+              avgHumidity:
+                type: "number"
+              accessories:
+                type: "array"
+                items:
+                  type: "object"
+                  properties:
+                    accessoryId:
+                      type: "integer"
+                    accessoryAttribute:
+                      properties:
+                        type:
+                          type: "string"
+                        connectionMethod:
+                          type: "string"
+                        name:
+                          type: "string"
+                        model:
+                          type: "string"
+                        serialNumber:
+                          type: "string"
+                        softwareRevision:
+                          type: "string"
+                        hardwareRevision:
+                          type: "string"
+                      type: "object"
+                    accessoryValue:
+                      properties:
+                        coolSetpoint:
+                          type: "number"
+                        heatSetpoint:
+                          type: "number"
+                        indoorHumidity:
+                          type: "number"
+                        indoorTemperature:
+                          type: "number"
+                        motionDet:
+                          type: "boolean"
+                        occupancyDet:
+                          type: "boolean"
+                        excludeTemp:
+                          type: "boolean"
+                        excludeMotion:
+                          type: "boolean"
+                        pressure:
+                          type: "number"
+                        occupancySensitivity:
+                          type: "string"
+                        occupancyTimeout:
+                          type: "integer"
+                        status:
+                          type: "string"
+                        batteryStatus:
+                          type: "string"
+                        rssiAverage:
+                          type: "number"
+                      type: "object"

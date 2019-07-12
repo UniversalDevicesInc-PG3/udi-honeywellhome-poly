@@ -1,0 +1,16 @@
+<nodeDefs>
+  <nodeDef id="controller" nls="ctl">
+    <editors />
+    <sts>
+      <st id="ST" editor="bool" />
+    </sts>
+    <cmds>
+      <sends />
+      <accepts>
+        <cmd id="DISCOVER" />
+        <cmd id="REMOVE_NOTICES_ALL" />
+        <cmd id="UPDATE_PROFILE" />
+      </accepts>
+    </cmds>
+  </nodeDef>
+</nodeDefs>

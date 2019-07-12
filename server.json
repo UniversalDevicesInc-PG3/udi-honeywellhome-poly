@@ -1,0 +1,22 @@
+{
+    "name": "Honeywell Home",
+    "docs": "https://github.com/dbarentine/udi-honeywellhome-poly/blob/master/README.md",
+    "type": "python3",
+    "executable": "honeywellhome-poly.py",
+    "install": "install.sh",
+    "install_cloud": "install_cloud.sh",
+    "description": "Honeywell Home",
+    "notice": "Your disclaimer here",
+    "shortPoll": "120",
+    "longPoll": "300",
+    "credits": [
+        {
+            "title": "A node server for integration with Honeywell Home Devices",
+            "author": "Dane Barentine",
+            "version": "1.0.0",
+            "date": "July 1, 2019",
+            "source": "https://github.com/dbarentine/udi-honeywellhome-poly",
+            "license": "https://raw.githubusercontent.com/dbarentine/udi-honeywellhome-poly/master/LICENSE"
+        }
+    ]
+}
