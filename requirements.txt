@@ -1,5 +1,6 @@
 polyinterface>=2.0.29
 
+oauthlib>=3.0.2
 certifi >= 14.05.14
 six >= 1.10
 python_dateutil >= 2.5.3
