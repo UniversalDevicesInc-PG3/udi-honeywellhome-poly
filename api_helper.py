@@ -36,6 +36,9 @@ class ApiHelper:
     def get_thermostats(self, location_id):
         return self._call_api(lambda: self._api.v2_devices_thermostats_get(self._client_id, self._user_id, location_id))
 
+    def get_thermostat(self, location_id, thermostat_id):
+        return self._call_api(lambda: self._api.v2_devices_thermostats_device_id_get(self._client_id, self._user_id, location_id, thermostat_id))
+
     def get_sensors(self, location_id, thermostat_id, group_id):
         return self._call_api(lambda: self._api.v2_devices_thermostats_device_id_group_group_id_rooms_get(self._client_id, self._user_id, location_id, thermostat_id, group_id))
 

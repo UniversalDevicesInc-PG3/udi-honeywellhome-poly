@@ -395,6 +395,12 @@ components:
           type: "number"
         maxCoolSetpoint:
           type: "number"
+        indoorHumidity:
+          type: "integer"
+        indoorHumidityStatus:
+          type: "string"
+        deviceModel:
+          type: "string"
         changeableValues:
           properties:
             mode:

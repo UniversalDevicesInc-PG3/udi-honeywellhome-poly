@@ -5,3 +5,11 @@ CMD-ctl-DISCOVER-NAME = Re-Discover
 CMD-ctl-UPDATE_PROFILE-NAME = Update Profile
 CMD-ctl-REMOVE_NOTICES_ALL-NAME = Remove Notices
 ST-ctl-ST-NAME = NodeServer Online
+
+# Thermostat Node
+ND-HwhC-NAME = Honeywell Thermostat (C)
+ND-HwhC-ICON = Thermostat
+ND-HwhF-NAME = Honeywell Thermostat (F)
+ND-HwhF-ICON = Thermostat
+
+ST-140H-ST-NAME = Temperature

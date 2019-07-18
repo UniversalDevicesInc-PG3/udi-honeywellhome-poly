@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+from thermostat import Thermostat
 
 try:
     import polyinterface
@@ -56,13 +57,23 @@ class Controller(polyinterface.Controller):
             update = len(args) > 0
 
             locations = self._api.get_locations()
-            thermostats = self._api.get_thermostats(locations[0].location_id)
-            sensors = self._api.get_sensors(locations[0].location_id, thermostats[0].device_id, thermostats[0].groups[0].id)
+            for location in locations:
+                for thermostat in location.devices:
+                    self.add_thermostat(location.location_id, location.name, thermostat, update)
 
             LOGGER.info("done")
         except Exception as ex:
             self.addNotice({'discovery_failed': 'Discovery failed please check logs for a more detailed error.'})
             LOGGER.error("Discovery failed with error {0}".format(ex))
+
+    def add_thermostat(self, location_id, location_name, thermostat, update):
+        t_name = location_name + ' - ' + thermostat['userDefinedDeviceName']
+        t_device_id = thermostat['deviceID']
+        t_addr = thermostat['macID'].lower()
+        use_celsius = thermostat['units'].lower() != 'fahrenheit'
+
+        self.addNode(Thermostat(self, t_addr, t_addr, t_name, self._api, location_id, t_device_id, use_celsius), update)
+        sensors = self._api.get_sensors(location_id, t_device_id, thermostat['groups'][0]['id'])
 
     def delete(self):
         LOGGER.info('Honeywell Home NS Deleted')

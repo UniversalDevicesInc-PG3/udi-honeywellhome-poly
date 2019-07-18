@@ -13,4 +13,16 @@
       </accepts>
     </cmds>
   </nodeDef>
+  <nodeDef id="HwhF" nodeType="140" nls="140H" >
+    <sts>
+      <st id="ST" editor="I_TEMP_F" />
+      <st id="CLISPH" editor="I_CLISPH_F" />
+      <st id="CLISPC" editor="I_CLISPC_F" />
+      <st id="CLIHUM" editor="I_HUMIDITY" />
+    </sts>
+    <cmds>
+      <sends />
+      <accepts />
+    </cmds>
+  </nodeDef>
 </nodeDefs>
