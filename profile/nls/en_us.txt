@@ -13,3 +13,25 @@ ND-HwhF-NAME = Honeywell Thermostat (F)
 ND-HwhF-ICON = Thermostat
 
 ST-140H-ST-NAME = Temperature
+ST-140H-GV1-NAME = Priority Type
+ST-140H-GV2-NAME = Schedule Status
+ST-140H-GV3-NAME = Current Schedule Mode
+ST-140H-GV4-NAME = Hold Status
+ST-140H-GV5-NAME = Vacation Hold
+ST-140H-GV6-NAME = Connected
+
+IX_PRIORITY_TYPE-0 = Pick A Room
+IX_PRIORITY_TYPE-1 = Follow Me
+
+IX_SCHEDULE_STATUS-0 = Pause
+IX_SCHEDULE_STATUS-1 = Resume
+
+IX_SCHEDULE_MODE-0 = Wake
+IX_SCHEDULE_MODE-1 = Away
+IX_SCHEDULE_MODE-2 = Home
+IX_SCHEDULE_MODE-3 = Sleep
+IX_SCHEDULE_MODE-4 = Custom
+
+IX_HOLD_STATUS-0 = No Hold
+IX_HOLD_STATUS-1 = Hold Until
+IX_HOLD_STATUS-2 = Permanent Hold

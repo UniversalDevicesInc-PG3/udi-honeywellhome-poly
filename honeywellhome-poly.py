@@ -74,6 +74,8 @@ class Controller(polyinterface.Controller):
 
         self.addNode(Thermostat(self, t_addr, t_addr, t_name, self._api, location_id, t_device_id, use_celsius), update)
         sensors = self._api.get_sensors(location_id, t_device_id, thermostat['groups'][0]['id'])
+        # for sensor in sensors:
+        #    LOGGER.info('')
 
     def delete(self):
         LOGGER.info('Honeywell Home NS Deleted')

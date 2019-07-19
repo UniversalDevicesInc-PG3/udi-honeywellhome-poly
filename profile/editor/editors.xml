@@ -27,7 +27,38 @@
     <range uom="17" min="32" max="90" step="1" prec="0"/>
   </editor>
 
+  <!-- Modes -->
+  <editor id="I_TSTAT_MODE">
+    <range uom="67" subset="0-3" />
+  </editor>
+  <editor id="I_TSTAT_FAN_MODE">
+    <range uom="68" subset="0,1,6" />
+  </editor>
+
+  <!-- Running States -->
+  <editor id="I_TSTAT_HCS">
+    <range uom="66" subset="0-13" />
+  </editor>
+  <editor id="I_TSTAT_FAN_STATE">
+    <range uom="80" subset="0,1" />
+  </editor>
+
+  <!-- Humidity -->
   <editor id="I_HUMIDITY">
     <range uom="22" min="0" max="100" prec="0" />
+  </editor>
+
+  <!-- Schedule Related -->
+  <editor id="I_PRIORITY_TYPE">
+    <range id="PRIORITY_TYPE" uom="25" subset="0-1" nls="IX_PRIORITY_TYPE" />
+  </editor>
+  <editor id="I_SCHEDULE_STATUS">
+    <range id="SCHEDULE_STATUS" uom="25" subset="0-1" nls="IX_SCHEDULE_STATUS" />
+  </editor>
+  <editor id="I_SCHEDULE_MODE">
+    <range id="SCHEDULE_MODE" uom="25" subset="0-4" nls="IX_SCHEDULE_MODE" />
+  </editor>
+  <editor id="I_HOLD_STATUS">
+    <range id="HOLD_STATUS" uom="25" subset="0-2" nls="IX_HOLD_STATUS" />
   </editor>
 </editors>

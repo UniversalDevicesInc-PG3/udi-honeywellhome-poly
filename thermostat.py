@@ -8,6 +8,7 @@ except ImportError:
     CLOUD = True
 
 from copy import deepcopy
+from utilities import *
 
 LOGGER = polyinterface.LOGGER
 
@@ -16,14 +17,77 @@ driversMap = {
         {'driver': 'ST', 'value': 0, 'uom': '17'},
         {'driver': 'CLISPH', 'value': 0, 'uom': '17'},
         {'driver': 'CLISPC', 'value': 0, 'uom': '17'},
-        {'driver': 'CLIHUM', 'value': 0, 'uom': '22'}
+        {'driver': 'CLIMD', 'value': 0, 'uom': '67'},
+        {'driver': 'CLIFS', 'value': 0, 'uom': '68'},
+        {'driver': 'CLIHUM', 'value': 0, 'uom': '22'},
+        {'driver': 'CLIHCS', 'value': 0, 'uom': '66'},
+        {'driver': 'CLIFRS', 'value': 0, 'uom': '80'},
+        {'driver': 'GV1', 'value': 0, 'uom': '25'},
+        {'driver': 'GV2', 'value': 0, 'uom': '25'},
+        {'driver': 'GV3', 'value': 0, 'uom': '25'},
+        {'driver': 'GV4', 'value': 0, 'uom': '25'},
+        {'driver': 'GV5', 'value': int(False), 'uom': '2'},
+        {'driver': 'GV6', 'value': int(False), 'uom': '2'},
     ],
     'HwhC': [
         {'driver': 'ST', 'value': 0, 'uom': '4'},
         {'driver': 'CLISPH', 'value': 0, 'uom': '4'},
         {'driver': 'CLISPC', 'value': 0, 'uom': '4'},
-        {'driver': 'CLIHUM', 'value': 0, 'uom': '22'}
+        {'driver': 'CLIMD', 'value': 0, 'uom': '67'},
+        {'driver': 'CLIFS', 'value': 0, 'uom': '68'},
+        {'driver': 'CLIHUM', 'value': 0, 'uom': '22'},
+        {'driver': 'CLIHCS', 'value': 0, 'uom': '66'},
+        {'driver': 'CLIFRS', 'value': 0, 'uom': '80'},
+        {'driver': 'GV1', 'value': 0, 'uom': '25'},
+        {'driver': 'GV2', 'value': 0, 'uom': '25'},
+        {'driver': 'GV3', 'value': 0, 'uom': '25'},
+        {'driver': 'GV4', 'value': 0, 'uom': '25'},
+        {'driver': 'GV5', 'value': int(False), 'uom': '2'},
+        {'driver': 'GV6', 'value': int(False), 'uom': '2'},
     ]
+}
+
+modeMap = {
+    'Off': 0,
+    'Heat': 1,
+    'Cool': 2,
+    'Auto': 3
+}
+
+fanMap = {
+    'Auto': 0,
+    'On': 1,
+    'Circulate': 6,
+}
+
+runningStateMap = {
+    'EquipmentOff': 0,
+    'Heat': 1,
+    'Cool': 2,
+}
+
+priorityTypeMap = {
+    'PickARoom': 0,
+    'FollowMe': 1
+}
+
+scheduleStatusMap = {
+    'Pause': 0,
+    'Resume': 1
+}
+
+scheduleModeMap = {
+    'Wake': 0,
+    'Away': 1,
+    'Home': 2,
+    'Sleep': 3,
+    'Custom': 4
+}
+
+holdStatusMap = {
+    'NoHold': 0,
+    'HoldUntil': 1,
+    'PermanentHold': 2
 }
 
 
@@ -49,11 +113,22 @@ class Thermostat(polyinterface.Node):
             LOGGER.debug("Query thermostat {}".format(self.address))
             thermostat = self._api.get_thermostat(self._location_id, self._thermostat_id)
 
+            # What does this look like in celsius
             updates = {
-                'ST': self.tempToDriver(thermostat.indoor_temperature, True, False),
-                'CLISPH': self.tempToDriver(thermostat.changeable_values.heat_setpoint, True),
-                'CLISPC': self.tempToDriver(thermostat.changeable_values.cool_setpoint, True),
-                'CLIHUM': thermostat.indoor_humidity
+                'ST': to_driver_value(thermostat.indoor_temperature, False),
+                'CLISPH': to_driver_value(thermostat.changeable_values.heat_setpoint, True),
+                'CLISPC': to_driver_value(thermostat.changeable_values.cool_setpoint, True),
+                'CLIMD': modeMap[thermostat.changeable_values.mode],
+                'CLIFS': fanMap[thermostat.settings.fan.changeable_values.mode],
+                'CLIHUM': thermostat.indoor_humidity,
+                'CLIHCS': runningStateMap[thermostat.operation_status.mode],
+                'CLIFRS': 1 if thermostat.operation_status.fan_request or thermostat.operation_status.circulation_fan_request else 0,  # This doesn't seem to work as expected
+                'GV1': priorityTypeMap[thermostat.priority_type],
+                'GV2': scheduleStatusMap[thermostat.schedule_status],
+                'GV3': scheduleModeMap[thermostat.current_schedule_period.period] if thermostat.current_schedule_period.period in scheduleModeMap else scheduleModeMap['Custom'],
+                'GV4': holdStatusMap[thermostat.changeable_values.thermostat_setpoint_status],
+                'GV5': int(thermostat.vacation_hold.enabled),
+                'GV6': int(thermostat.is_alive)
             }
 
             for key, value in updates.items():
@@ -63,37 +138,6 @@ class Thermostat(polyinterface.Node):
             self.l_error("_query", "Refreshing thermostat {0} failed {1}".format(self.address, ex))
 
         self.reportDrivers()
-
-    # Convert Temperature for driver
-    # FromE converts from Ecobee API value, and to C if necessary
-    # By default F values are converted to int, but for ambiant temp we
-    # allow one decimal.
-    def tempToDriver(self, temp, fromE=False, FtoInt=True):
-        try:
-            temp = float(temp)
-        except:
-            LOGGER.error("{}:tempToDriver: Unable to convert '{}' to float")
-            return False
-        # Convert from Ecobee value, unless it's already 0.
-        if fromE and temp != 0:
-            temp = temp / 10
-        if self._use_celsius:
-            if fromE:
-                temp = self.toC(temp)
-            return temp
-        else:
-            if FtoInt:
-                return int(temp)
-            else:
-                return temp
-
-    def toC(tempF):
-        # Round to the nearest .5
-        return round(((tempF - 32) / 1.8) * 2) / 2
-
-    def toF(tempC):
-        # Round to nearest whole degree
-        return int(round(tempC * 1.8) + 32)
 
     def l_info(self, name, string):
         LOGGER.info("%s:%s:%s: %s" % (self.id, self.name, name, string))

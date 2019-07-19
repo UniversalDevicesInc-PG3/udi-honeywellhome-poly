@@ -433,6 +433,8 @@ components:
             circulationFanRequest:
               type: "boolean"
           type: "object"
+        priorityType:
+          type: "string"
     thermostatSensor:
       properties:
         deviceId:
