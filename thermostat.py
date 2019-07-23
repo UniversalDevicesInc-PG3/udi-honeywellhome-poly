@@ -120,7 +120,7 @@ class Thermostat(polyinterface.Node):
                 'CLISPC': to_driver_value(thermostat.changeable_values.cool_setpoint, True),
                 'CLIMD': modeMap[thermostat.changeable_values.mode],
                 'CLIFS': fanMap[thermostat.settings.fan.changeable_values.mode],
-                'CLIHUM': thermostat.indoor_humidity,
+                'CLIHUM': to_driver_value(thermostat.indoor_humidity, True),
                 'CLIHCS': runningStateMap[thermostat.operation_status.mode],
                 'CLIFRS': 1 if thermostat.operation_status.fan_request or thermostat.operation_status.circulation_fan_request else 0,  # This doesn't seem to work as expected
                 'GV1': priorityTypeMap[thermostat.priority_type],

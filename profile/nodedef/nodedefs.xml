@@ -55,4 +55,28 @@
       <accepts />
     </cmds>
   </nodeDef>
+  <nodeDef id="HwhSensorF" nodeType="140" nls="140HS" >
+    <sts>
+      <st id="GV0" editor="I_SENSOR_STATUS" /> <!-- Status -->
+      <st id="ST" editor="I_TEMP_F" />
+      <st id="GV1" editor="I_TEMP_F" /> <!-- Avg Temp -->
+      <st id="CLIHUM" editor="I_HUMIDITY" />
+      <st id="GV2" editor="I_HUMIDITY" /> <!-- Avg Humidity -->
+      <st id="GV3" editor="BOOL" /> <!-- Motion -->
+      <st id="GV4" editor="BOOL" /> <!-- Occupancy -->
+      <st id="GV5" editor="I_SENSOR_BATTERY_STATUS" /> <!-- Battery Status -->
+    </sts>
+  </nodeDef>
+  <nodeDef id="HwhSensorC" nodeType="140" nls="140HS" >
+    <sts>
+      <st id="GV0" editor="I_SENSOR_STATUS" /> <!-- Status -->
+      <st id="ST" editor="I_TEMP_C" />
+      <st id="GV1" editor="I_TEMP_C" /> <!-- Avg Temp -->
+      <st id="CLIHUM" editor="I_HUMIDITY" />
+      <st id="GV2" editor="I_HUMIDITY" /> <!-- Avg Humidity -->
+      <st id="GV3" editor="BOOL" /> <!-- Motion -->
+      <st id="GV4" editor="BOOL" /> <!-- Occupancy -->
+      <st id="GV5" editor="I_SENSOR_BATTERY_STATUS" /> <!-- Battery Status -->
+    </sts>
+  </nodeDef>
 </nodeDefs>

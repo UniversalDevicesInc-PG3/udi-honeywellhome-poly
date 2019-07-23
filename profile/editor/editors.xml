@@ -61,4 +61,12 @@
   <editor id="I_HOLD_STATUS">
     <range id="HOLD_STATUS" uom="25" subset="0-2" nls="IX_HOLD_STATUS" />
   </editor>
+
+  <!-- Sensors -->
+  <editor id="I_SENSOR_STATUS">
+    <range id="SENSOR_STATUS" uom="25" subset="0-2" nls="IX_SENSOR_STATUS" />
+  </editor>
+  <editor id="I_SENSOR_BATTERY_STATUS">
+    <range id="SENSOR_BATTERY_STATUS" uom="25" subset="0-2" nls="IX_SENSOR_BATTERY_STATUS" />
+  </editor>
 </editors>

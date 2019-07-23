@@ -35,3 +35,25 @@ IX_SCHEDULE_MODE-4 = Custom
 IX_HOLD_STATUS-0 = No Hold
 IX_HOLD_STATUS-1 = Hold Until
 IX_HOLD_STATUS-2 = Permanent Hold
+
+# Indoor Air Sensor Node
+ND-HwhSensorC-NAME = Honeywell Indoor Air Sensor (C)
+ND-HwhSensorC-ICON = TempSensor
+ND-HwhSensorF-NAME = Honeywell Indoor Air Sensor (F)
+ND-HwhSensorF-ICON = TempSensor
+
+ST-140HS-GV0-NAME = Status
+ST-140HS-ST-NAME = Temperature
+ST-140HS-GV1-NAME = Average Temperature
+ST-140HS-GV2-NAME = Average Humidity
+ST-140HS-GV3-NAME = Motion Detected
+ST-140HS-GV4-NAME = Occupancy Detected
+ST-140HS-GV5-NAME = Battery Ok
+
+IX_SENSOR_STATUS-0 = Unknown
+IX_SENSOR_STATUS-1 = Ok
+IX_SENSOR_STATUS-2 = Not Available
+
+IX_SENSOR_BATTERY_STATUS-0 = Unknown
+IX_SENSOR_BATTERY_STATUS-1 = Ok
+IX_SENSOR_BATTERY_STATUS-2 = Low
