@@ -36,6 +36,10 @@ IX_HOLD_STATUS-0 = No Hold
 IX_HOLD_STATUS-1 = Hold Until
 IX_HOLD_STATUS-2 = Permanent Hold
 
+EN_PM-0 = Running
+EN_PM-1 = Hold Next
+EN_PM-2 = Hold Indefinite
+
 # Indoor Air Sensor Node
 ND-HwhSensorC-NAME = Honeywell Indoor Air Sensor (C)
 ND-HwhSensorC-ICON = TempSensor

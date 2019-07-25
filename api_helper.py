@@ -12,6 +12,7 @@ from oauthlib.oauth2 import BackendApplicationClient
 from oauthlib.oauth2 import OAuth2Token
 from requests_oauthlib.oauth2_session import OAuth2Session
 from urllib.parse import urljoin
+from utilities import *
 
 LOGGER = polyinterface.LOGGER
 
@@ -41,6 +42,18 @@ class ApiHelper:
 
     def get_sensors(self, location_id, thermostat_id, group_id):
         return self._call_api(lambda: self._api.v2_devices_thermostats_device_id_group_group_id_rooms_get(self._client_id, self._user_id, location_id, thermostat_id, group_id))
+
+    def set_setpoint(self, location_id, thermostat_id, heat_setpoint, cool_setpoint, use_celcius, mode="Auto", auto_changeover_active=True, thermostat_setpoint_status='TemporaryHold'):
+        if use_celcius:
+            h_setpoint = to_half(heat_setpoint)
+            c_setpoint = to_half(cool_setpoint)
+        else:
+            h_setpoint = to_driver_value(heat_setpoint, True)
+            c_setpoint = to_driver_value(cool_setpoint, True)
+
+        update = honeywell_home.models.update_thermostat.UpdateThermostat(mode=mode, auto_changeover_active=auto_changeover_active, heat_setpoint=h_setpoint, cool_setpoint=c_setpoint, thermostat_setpoint_status=thermostat_setpoint_status)
+
+        self._call_api(lambda: self._api.v2_devices_thermostats_device_id_post(self._client_id, self._user_id, location_id, thermostat_id, update))
 
     @retry(InvalidTokenError, tries=3)
     def _call_api(self, function):

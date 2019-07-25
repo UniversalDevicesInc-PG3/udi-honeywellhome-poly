@@ -25,23 +25,6 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/location'
-  #  /v2/devices:
-  #    get:
-  #      summary: Return all devices in a particular locationID
-  #      parameters:
-  #        - $ref: '#/components/parameters/ApiKey'
-  #        - $ref: '#/components/parameters/UserRefId'
-  #        - $ref: '#/components/parameters/LocationId'
-  #      responses:
-  #        200:
-  #          description: OK
-  #          content:
-  #            application/json:
-  #             schema:
-  #               type: array
-  #                items:
-  #                  # This actually isn't right as it can be more than just a thermostat
-  #                  $ref: '#/components/schemas/thermostat'
   /v2/devices/thermostats:
     get:
       summary: Return all thermostats in a particular locationID
@@ -73,6 +56,70 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/thermostat'
+    post:
+      summary: Change the setpoint, system mode, and auto changeover status of a thermostat.
+      parameters:
+        - $ref: '#/components/parameters/ApiKey'
+        - $ref: '#/components/parameters/UserRefId'
+        - $ref: '#/components/parameters/LocationId'
+        - $ref: '#/components/parameters/DeviceId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/updateThermostat'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+  /v2/devices/thermostats/{deviceId}/fan:
+    post:
+      summary: Change the current Fan setting for specified DeviceID.
+      parameters:
+        - $ref: '#/components/parameters/ApiKey'
+        - $ref: '#/components/parameters/UserRefId'
+        - $ref: '#/components/parameters/LocationId'
+        - $ref: '#/components/parameters/DeviceId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/updateFanMode'
+  /v2/devices/thermostats/{deviceId}/priority:
+    put:
+      summary: Change the room priority settings for a T9/T10 thermostat.
+      parameters:
+        - $ref: '#/components/parameters/ApiKey'
+        - $ref: '#/components/parameters/UserRefId'
+        - $ref: '#/components/parameters/LocationId'
+        - $ref: '#/components/parameters/DeviceId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/updatePriority'
   /v2/devices/thermostats/{deviceId}/group/{groupId}/rooms:
     get:
       summary: Return status of sensors
@@ -511,3 +558,38 @@ components:
                         rssiAverage:
                           type: "number"
                       type: "object"
+    updateThermostat:
+      type: object
+      properties:
+        mode:
+          type: "string"
+          enum: [ 'Auto', 'Heat', 'Cool', 'Off' ]
+        autoChangeoverActive:
+          type: "boolean"
+        emergencyHeatActive:
+          type: "boolean"
+        heatSetpoint:
+          type: "number"
+        coolSetpoint:
+          type: "number"
+        thermostatSetpointStatus:
+          type: "string"
+          enum: [ 'NoHold', 'TemporaryHold', 'HoldUntil', 'PermanentHold' ]
+        nextPeriodTime:
+          type: "string"
+    updateFanMode:
+      type: object
+      properties:
+        mode:
+          type: "string"
+          enum: [ 'On', 'Off' ]
+    updatePriority:
+      type: object
+      properties:
+        priorityType:
+          type: "string"
+          enum: [ 'PickARoom', 'FollowMe', 'WholeHouse' ]
+        selectedRooms:
+          type: "array"
+          items:
+            type: "integer"

@@ -84,6 +84,12 @@ scheduleModeMap = {
     'Custom': 4
 }
 
+setScheduleModeMap = {
+    0: 'NoHold',
+    1: 'TemporaryHold',
+    2: 'PermanentHold',
+}
+
 holdStatusMap = {
     'NoHold': 0,
     'HoldUntil': 1,
@@ -99,6 +105,7 @@ class Thermostat(polyinterface.Node):
         self._location_id = location_id
         self._thermostat_id = thermostat_id
         self._use_celsius = is_celsius
+        self._auto_changeover_active = False
         self.type = 'thermostat'
         self.id = 'HwhC' if self._use_celsius else 'HwhF'
         self.drivers = self._convertDrivers(driversMap[self.id]) if CLOUD else deepcopy(driversMap[self.id])
@@ -112,8 +119,8 @@ class Thermostat(polyinterface.Node):
         try:
             LOGGER.debug("Query thermostat {}".format(self.address))
             thermostat = self._api.get_thermostat(self._location_id, self._thermostat_id)
+            self._auto_changeover_active = thermostat.settings.special_mode.auto_changeover_active
 
-            # What does this look like in celsius
             updates = {
                 'ST': to_driver_value(thermostat.indoor_temperature, False),
                 'CLISPH': to_driver_value(thermostat.changeable_values.heat_setpoint, True),
@@ -139,6 +146,50 @@ class Thermostat(polyinterface.Node):
 
         self.reportDrivers()
 
+    def cmdSetPF(self, cmd):
+        try:
+            driver = cmd['cmd']
+
+            # Get current values so we don't change the wrong things
+            thermostat = self._api.get_thermostat(self._location_id, self._thermostat_id)
+            h_setpoint = thermostat.changeable_values.heat_setpoint
+            c_setpoint = thermostat.changeable_values.cool_setpoint
+            mode = thermostat.changeable_values.mode
+
+            updates = {
+                'CLISPH': to_driver_value(h_setpoint, True),
+                'CLISPC': to_driver_value(c_setpoint, True),
+                'CLIMD': modeMap[mode],
+            }
+
+            if driver == 'CLISPH':
+                self._api.set_setpoint(self._location_id, self._thermostat_id, cmd['value'], c_setpoint, self._use_celsius, mode, self._auto_changeover_active)
+                updates['CLISPH'] = to_driver_value(cmd['value'], True)
+            elif driver == 'CLISPC':
+                self._api.set_setpoint(self._location_id, self._thermostat_id, h_setpoint, cmd['value'], self._use_celsius, mode, self._auto_changeover_active)
+                updates['CLISPC'] = to_driver_value(cmd['value'], True)
+            elif driver == 'CLIMD':
+                mode = next((key for key, value in modeMap.items() if value == int(cmd['value'])), None)
+                self._api.set_setpoint(self._location_id, self._thermostat_id, h_setpoint, c_setpoint, self._use_celsius, mode, self._auto_changeover_active)
+                updates['CLIMD'] = cmd['value']
+
+            for key, value in updates.items():
+                self.l_debug('_update', 'setDriver({},{})'.format(key, value))
+                self.setDriver(key, value)
+        except Exception as ex:
+            self.l_error("_setPF", "Could not set thermostat set point because {0}".format(self.address, ex))
+
+    def cmdSetScheduleMode(self, cmd):
+        # POST /v2/devices/thermostats/{deviceId}
+        if int(self.getDriver(cmd['cmd'])) == int(cmd['value']):
+            LOGGER.debug("cmdSetScheduleMode: {}={} already set to {}".format(cmd['cmd'],self.getDriver(cmd['cmd']),cmd['value']))
+        # else:
+        #    self.pushScheduleMode(cmd['value'])
+
+    def cmdSetFS(self, cmd):
+        # POST /v2/devices/thermostats/{deviceId}/fan
+        driver = cmd['cmd']
+
     def l_info(self, name, string):
         LOGGER.info("%s:%s:%s: %s" % (self.id, self.name, name, string))
 
@@ -152,4 +203,9 @@ class Thermostat(polyinterface.Node):
         LOGGER.debug("%s:%s:%s:%s: %s" % (self.id, self.address, self.name, name, string))
 
     commands = {
+        'CLISPH': cmdSetPF,
+        'CLISPC': cmdSetPF,
+        'CLIMD': cmdSetPF,
+        'CLISMD': cmdSetScheduleMode,
+        'CLIFS': cmdSetFS,
     }

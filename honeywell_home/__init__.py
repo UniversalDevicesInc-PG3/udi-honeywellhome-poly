@@ -56,4 +56,7 @@ from honeywell_home.models.thermostat_settings_hardware_settings import Thermost
 from honeywell_home.models.thermostat_settings_special_mode import ThermostatSettingsSpecialMode
 from honeywell_home.models.thermostat_settings_temperature_mode import ThermostatSettingsTemperatureMode
 from honeywell_home.models.thermostat_vacation_hold import ThermostatVacationHold
+from honeywell_home.models.update_fan_mode import UpdateFanMode
+from honeywell_home.models.update_priority import UpdatePriority
+from honeywell_home.models.update_thermostat import UpdateThermostat
 
