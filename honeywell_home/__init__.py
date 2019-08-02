@@ -58,5 +58,6 @@ from honeywell_home.models.thermostat_settings_temperature_mode import Thermosta
 from honeywell_home.models.thermostat_vacation_hold import ThermostatVacationHold
 from honeywell_home.models.update_fan_mode import UpdateFanMode
 from honeywell_home.models.update_priority import UpdatePriority
+from honeywell_home.models.update_priority_current_priority import UpdatePriorityCurrentPriority
 from honeywell_home.models.update_thermostat import UpdateThermostat
 

@@ -65,7 +65,7 @@ class UpdateFanMode(object):
         :param mode: The mode of this UpdateFanMode.  # noqa: E501
         :type: str
         """
-        allowed_values = ["On", "Off"]  # noqa: E501
+        allowed_values = ["On", "Auto", "Circulate"]  # noqa: E501
         if mode not in allowed_values:
             raise ValueError(
                 "Invalid value for `mode` ({0}), must be one of {1}"  # noqa: E501

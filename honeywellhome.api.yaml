@@ -72,10 +72,6 @@ paths:
       responses:
         200:
           description: OK
-          content:
-            application/json:
-              schema:
-                type: object
   /v2/devices/thermostats/{deviceId}/fan:
     post:
       summary: Change the current Fan setting for specified DeviceID.
@@ -89,15 +85,11 @@ paths:
         content:
           application/json:
             schema:
-              type: object
+              $ref: '#/components/schemas/updateFanMode'
 
       responses:
         200:
           description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/updateFanMode'
   /v2/devices/thermostats/{deviceId}/priority:
     put:
       summary: Change the room priority settings for a T9/T10 thermostat.
@@ -111,15 +103,10 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-
+              $ref: '#/components/schemas/updatePriority'
       responses:
         200:
           description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/updatePriority'
   /v2/devices/thermostats/{deviceId}/group/{groupId}/rooms:
     get:
       summary: Return status of sensors
@@ -582,14 +569,17 @@ components:
       properties:
         mode:
           type: "string"
-          enum: [ 'On', 'Off' ]
+          enum: [ 'On', 'Auto', 'Circulate' ]
     updatePriority:
       type: object
       properties:
-        priorityType:
-          type: "string"
-          enum: [ 'PickARoom', 'FollowMe', 'WholeHouse' ]
-        selectedRooms:
-          type: "array"
-          items:
-            type: "integer"
+        currentPriority:
+          type: object
+          properties:
+            priorityType:
+              type: "string"
+              enum: [ 'PickARoom', 'FollowMe', 'WholeHouse' ]
+            selectedRooms:
+              type: "array"
+              items:
+                type: "integer"

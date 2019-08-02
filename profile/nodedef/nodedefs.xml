@@ -42,13 +42,11 @@
         <cmd id="CLIMD">
           <p id="" editor="I_TSTAT_MODE" init="CLIMD" />
         </cmd>
-        <cmd id="CLISMD">
+        <cmd id="GV4">
           <p id="" editor="I_TSTAT_PROG_MODE" init="CLISMD" />
         </cmd>
         <cmd id="CLIFS">
           <p id="" editor="I_TSTAT_FAN_MODE" init="CLIFS" />
-          <!-- Used for Hold option when setting climate type in program -->
-          <p id="HoldType" editor="I_TSTAT_HWH_SCHED_OPT" init="0" optional="T" />
         </cmd>
       </accepts>
     </cmds>
@@ -80,13 +78,11 @@
         <cmd id="CLIMD">
           <p id="" editor="I_TSTAT_MODE" init="CLIMD" />
         </cmd>
-        <cmd id="CLISMD">
-          <p id="" editor="I_TSTAT_PROG_MODE" init="CLISMD" />
+        <cmd id="GV4">
+          <p id="" editor="I_TSTAT_PROG_MODE" init="GV4" />
         </cmd>
         <cmd id="CLIFS">
           <p id="" editor="I_TSTAT_FAN_MODE" init="CLIFS" />
-          <!-- Used for Hold option when setting climate type in program -->
-          <p id="HoldType" editor="I_TSTAT_HWH_SCHED_OPT" init="0" optional="T" />
         </cmd>
       </accepts>
     </cmds>

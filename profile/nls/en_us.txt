@@ -12,6 +12,7 @@ ND-HwhC-ICON = Thermostat
 ND-HwhF-NAME = Honeywell Thermostat (F)
 ND-HwhF-ICON = Thermostat
 
+CMD-GV4-NAME = Schedule Mode
 ST-140H-ST-NAME = Temperature
 ST-140H-GV1-NAME = Priority Type
 ST-140H-GV2-NAME = Schedule Status
@@ -22,6 +23,7 @@ ST-140H-GV6-NAME = Connected
 
 IX_PRIORITY_TYPE-0 = Pick A Room
 IX_PRIORITY_TYPE-1 = Follow Me
+IX_PRIORITY_TYPE-2 = Whole House
 
 IX_SCHEDULE_STATUS-0 = Pause
 IX_SCHEDULE_STATUS-1 = Resume

@@ -55,6 +55,15 @@ class ApiHelper:
 
         self._call_api(lambda: self._api.v2_devices_thermostats_device_id_post(self._client_id, self._user_id, location_id, thermostat_id, update))
 
+    def set_fanmode(self, location_id, thermostat_id, mode):
+        update = honeywell_home.models.update_fan_mode.UpdateFanMode(mode)
+        self._call_api(lambda: self._api.v2_devices_thermostats_device_id_fan_post_with_http_info(self._client_id, self._user_id, location_id, thermostat_id, update))
+
+    def set_priority(self, location_id, thermostat_id, priority_type):
+        current_priority = honeywell_home.models.update_priority_current_priority.UpdatePriorityCurrentPriority(priority_type)
+        update = honeywell_home.models.update_priority.UpdatePriority(current_priority)
+        self._call_api(lambda: self._api.v2_devices_thermostats_device_id_priority_put(self._client_id, self._user_id, location_id, thermostat_id, update))
+
     @retry(InvalidTokenError, tries=3)
     def _call_api(self, function):
         try:
