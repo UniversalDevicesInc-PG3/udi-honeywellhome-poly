@@ -3,6 +3,14 @@
 ## Description
 This project is a node server to integrate Honeywell Home thermostats into the UDI ISY. It is designed to run in UDI's [Polyglot v2](https://github.com/UniversalDevicesInc/polyglot-v2) server.
 
+## Screenshots
+
+#### Thermostat
+![Thermostat](docs/demo01.png)
+
+#### Remote Sensor
+![Sensor](docs/demo02.png)
+
 ## Requirements
 * [Honeywell Home](https://www.honeywellhome.com/) Wifi connected thermostat and Honeywell Home Login
 * [Honeywell Developer Account](https://developer.honeywell.com) Free Honeywell Home developer account.
