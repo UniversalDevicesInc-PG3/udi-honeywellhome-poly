@@ -20,7 +20,7 @@ This node server uses uses OAuth client credentials to authenticate to the API. 
 2. Authorize API client to access thermostat(s) and get user ID
 3. Configure node server
 
-## Create API client
+### Create API client
 The first step is to go to [https://developer.honeywell.com](https://developer.honeywell.com) and sign up for a developer account. This account is free.
 
 ![Developer Signup](docs/screen01.png)
@@ -39,7 +39,7 @@ For the Callback URL use https://udi-honeywellhome-auth.azurewebsites.net. This 
 
 When finished click the Save Changes button.
 
-## Authorize API client
+### Authorize API client
 We now need to authorize the client created above to allow it to access our thermostats. Click on the client's name which should display the Consumer Key (client ID) and Consumer Secret (client secret). We will need those for the next step.
 
 ![Client Credentials](docs/screen04.png)
@@ -70,7 +70,7 @@ Once it's finished you should see a table with your user and some JSON below. Th
 
 ![User ID](docs/screen09.png)
 
-## Configure node server
+### Configure node server
 
 The last step is to go into Polyglot and configure the Honeywell Home node server.
 
