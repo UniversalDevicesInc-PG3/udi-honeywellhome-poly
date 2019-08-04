@@ -7,15 +7,15 @@ This node server uses uses OAuth client credentials to authenticate to the API. 
 ## Create API client
 The first step is to go to [https://developer.honeywell.com](https://developer.honeywell.com) and sign up for a developer account. This account is free.
 
-![Developer Signup](https://dbarentine.github.io/udi-honeywellhome-poly/screen01.png]
+![Developer Signup](screen01.png)
 
 Once your developer account is created we need to create the API client. This is done by clicking on MY APPS and then clicking the CREATE NEW APP button.
 
-![Create App](https://dbarentine.github.io/udi-honeywellhome-poly/screen02.png]
+![Create App](screen02.png)
 
 You will now see the create application screen.
 
-![Create App](https://dbarentine.github.io/udi-honeywellhome-poly/screen03.png]
+![Create App](screen03.png)
 
 Set the App Name name to whatever you like.
 
@@ -26,7 +26,7 @@ When finished click the Save Changes button.
 ## Authorize API client
 We now need to authorize the client created above to allow it to access our thermostats. Click on the client's name which should display the Consumer Key (client ID) and Consumer Secret (client secret). We will need those for the next step.
 
-![Client Credentials](https://dbarentine.github.io/udi-honeywellhome-poly/screen04.png]
+![Client Credentials](screen04.png)
 
 Open another tab and go to [https://udi-honeywellhome-auth.azurewebsites.net](https://udi-honeywellhome-auth.azurewebsites.net).
 
@@ -34,25 +34,25 @@ Open another tab and go to [https://udi-honeywellhome-auth.azurewebsites.net](ht
 
 Enter your Client ID (Consumer Key) and Client Secret (Consumer Secret) in the form and click Log in.
 
-![Client Credentials](https://dbarentine.github.io/udi-honeywellhome-poly/screen05.png]
+![Client Credentials](screen05.png)
 
 This will intiate a login process with Honeywell Home. You will need to enter your Honeywell Home user (email) and password.
 
-![Login](https://dbarentine.github.io/udi-honeywellhome-poly/screen06.png]
+![Login](screen06.png)
 
 After the login it will ask that you allow your client access to Honeywell Home. Click ALLOW.
 
-![Authorize](https://dbarentine.github.io/udi-honeywellhome-poly/screen07.png]
+![Authorize](screen07.png)
 
 The next screen will ask which devices you want it to have access to. This is mostly up to you but obviously if we don't have access to the thermostats this won't work. Click CONNECT once you've checked the devices you wish to connect.
 
-![Authorize](https://dbarentine.github.io/udi-honeywellhome-poly/screen08.png]
+![Authorize](screen08.png)
 
 At this point you will be redirected back to the UI. It may take a few seconds for it to refresh the page as it has to make some API calls in the background.
 
 Once it's finished you should see a table with your user and some JSON below. This is how we know everything is working correctly. Keep track of the User ID as we will need it in the next step.
 
-![User ID](https://dbarentine.github.io/udi-honeywellhome-poly/screen09.png]
+![User ID](creen09.png)
 
 ## Configure node server
 
@@ -60,6 +60,6 @@ The last step is to go into Polyglot and configure the Honeywell Home node serve
 
 We need the client ID and client secret from the client we created as well as the user ID from the previous page.
 
-![Node server](https://dbarentine.github.io/udi-honeywellhome-poly/screen10.png]
+![Node server](screen10.png)
 
 Save Changes and restart the node server and it should discover any thermostats and sensors.
