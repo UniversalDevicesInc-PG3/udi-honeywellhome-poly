@@ -14,7 +14,7 @@
             "title": "A node server for integration with Honeywell Home Devices",
             "author": "Dane Barentine",
             "version": "1.0.0",
-            "date": "July 1, 2019",
+            "date": "August 3, 2019",
             "source": "https://github.com/dbarentine/udi-honeywellhome-poly",
             "license": "https://raw.githubusercontent.com/dbarentine/udi-honeywellhome-poly/master/LICENSE"
         }
