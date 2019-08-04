@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+from thermostat import Thermostat
+from indoor_air_sensor import IndoorAirSensor
 
 try:
     import polyinterface
@@ -56,13 +58,40 @@ class Controller(polyinterface.Controller):
             update = len(args) > 0
 
             locations = self._api.get_locations()
-            thermostats = self._api.get_thermostats(locations[0].location_id)
-            sensors = self._api.get_sensors(locations[0].location_id, thermostats[0].device_id, thermostats[0].groups[0].id)
+            for location in locations:
+                for thermostat in location.devices:
+                    self.add_thermostat(location.location_id, location.name, thermostat, update)
 
-            LOGGER.info("done")
+            LOGGER.info("Discovery Finished")
         except Exception as ex:
             self.addNotice({'discovery_failed': 'Discovery failed please check logs for a more detailed error.'})
             LOGGER.error("Discovery failed with error {0}".format(ex))
+
+    def add_thermostat(self, location_id, location_name, thermostat, update):
+        t_name = location_name + ' - ' + thermostat['userDefinedDeviceName']
+        t_device_id = thermostat['deviceID']
+        t_addr = thermostat['macID'].lower()
+        use_celsius = thermostat['units'].lower() != 'fahrenheit'
+
+        LOGGER.debug('Adding thermostat with id {0} and name {1} and addr {2}'.format(t_device_id, t_name, t_addr))
+        self.addNode(Thermostat(self, t_addr, t_addr, t_name, self._api, location_id, t_device_id, use_celsius), update)
+
+        for group in thermostat['groups']:
+            group_id = group['id']
+
+            sensors = self._api.get_sensors(location_id, t_device_id, group_id)
+            for sensor in sensors.rooms:
+                if len(sensor.accessories) == 0:
+                    continue
+
+                # TODO: Do we ever have to care about multiple accessory blocks?
+                sensor_type = sensor.accessories[0].accessory_attribute.type
+                sensor_name = sensor.name
+                sensor_addr = t_addr + str(group_id) + str(sensor.id)
+
+                if sensor_type == 'IndoorAirSensor' or sensor_type == 'Thermostat':
+                    LOGGER.debug('Adding IndoorAirSensor with name {0} and addr {1} for thermostat {2}'.format(sensor_name, sensor_addr, t_addr))
+                    self.addNode(IndoorAirSensor(self, t_addr, sensor_addr, sensor_name, self._api, location_id, t_device_id, group_id, sensor.id, use_celsius))
 
     def delete(self):
         LOGGER.info('Honeywell Home NS Deleted')

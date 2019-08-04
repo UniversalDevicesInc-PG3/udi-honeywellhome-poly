@@ -2,4 +2,78 @@
   <editor id="BOOL">
     <range uom="2" subset="0,1" />
   </editor>
+
+  <!-- Temperature -->
+  <editor id="I_TEMP_C">
+    <range uom="4" min="-50" max="75" step="0.5" prec="1" />
+  </editor>
+  <editor id="I_TEMP_F">
+    <range uom="17" min="-50" max="150" step="0.5" prec="1" />
+  </editor>
+
+  <!-- CLISPC -  Cool Setpoint -->
+  <editor id="I_CLISPC_C">
+    <range uom="4" min="5" max="35" step="0.5" prec="1" />
+  </editor>
+  <editor id="I_CLISPC_F">
+    <range uom="17" min="32" max="90" step="1" prec="0"/>
+  </editor>
+
+  <!-- CLISPH -  Heat Setpoint -->
+  <editor id="I_CLISPH_C">
+    <range uom="4" min="5" max="35" step="0.5" prec="1" />
+  </editor>
+  <editor id="I_CLISPH_F">
+    <range uom="17" min="32" max="90" step="1" prec="0"/>
+  </editor>
+
+  <!-- Modes -->
+  <editor id="I_TSTAT_MODE">
+    <range uom="67" subset="0-3" />
+  </editor>
+  <editor id="I_TSTAT_FAN_MODE">
+    <range uom="68" subset="0,1,6" />
+  </editor>
+  <editor id="I_TSTAT_PROG_MODE">
+    <range uom="25" subset="0-2" nls="EN_PM" />
+  </editor>
+  <!-- Used for Hold option when setting climate type in program -->
+  <editor id="I_TSTAT_HWH_SCHED_OPT">
+    <range uom="25" subset="1-2" nls="EN_PM" />
+  </editor>
+
+  <!-- Running States -->
+  <editor id="I_TSTAT_HCS">
+    <range uom="66" subset="0-13" />
+  </editor>
+  <editor id="I_TSTAT_FAN_STATE">
+    <range uom="80" subset="0,1" />
+  </editor>
+
+  <!-- Humidity -->
+  <editor id="I_HUMIDITY">
+    <range uom="22" min="0" max="100" prec="0" />
+  </editor>
+
+  <!-- Schedule Related -->
+  <editor id="I_PRIORITY_TYPE">
+    <range id="PRIORITY_TYPE" uom="25" subset="0-2" nls="IX_PRIORITY_TYPE" />
+  </editor>
+  <editor id="I_SCHEDULE_STATUS">
+    <range id="SCHEDULE_STATUS" uom="25" subset="0-1" nls="IX_SCHEDULE_STATUS" />
+  </editor>
+  <editor id="I_SCHEDULE_MODE">
+    <range id="SCHEDULE_MODE" uom="25" subset="0-4" nls="IX_SCHEDULE_MODE" />
+  </editor>
+  <editor id="I_HOLD_STATUS">
+    <range id="HOLD_STATUS" uom="25" subset="0-2" nls="IX_HOLD_STATUS" />
+  </editor>
+
+  <!-- Sensors -->
+  <editor id="I_SENSOR_STATUS">
+    <range id="SENSOR_STATUS" uom="25" subset="0-2" nls="IX_SENSOR_STATUS" />
+  </editor>
+  <editor id="I_SENSOR_BATTERY_STATUS">
+    <range id="SENSOR_BATTERY_STATUS" uom="25" subset="0-2" nls="IX_SENSOR_BATTERY_STATUS" />
+  </editor>
 </editors>

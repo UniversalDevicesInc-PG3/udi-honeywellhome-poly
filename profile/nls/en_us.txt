@@ -5,3 +5,61 @@ CMD-ctl-DISCOVER-NAME = Re-Discover
 CMD-ctl-UPDATE_PROFILE-NAME = Update Profile
 CMD-ctl-REMOVE_NOTICES_ALL-NAME = Remove Notices
 ST-ctl-ST-NAME = NodeServer Online
+
+# Thermostat Node
+ND-HwhC-NAME = Honeywell Thermostat (C)
+ND-HwhC-ICON = Thermostat
+ND-HwhF-NAME = Honeywell Thermostat (F)
+ND-HwhF-ICON = Thermostat
+
+CMD-GV4-NAME = Schedule Mode
+ST-140H-ST-NAME = Temperature
+ST-140H-GV1-NAME = Priority Type
+ST-140H-GV2-NAME = Schedule Status
+ST-140H-GV3-NAME = Current Schedule Mode
+ST-140H-GV4-NAME = Hold Status
+ST-140H-GV5-NAME = Vacation Hold
+ST-140H-GV6-NAME = Connected
+
+IX_PRIORITY_TYPE-0 = Pick A Room
+IX_PRIORITY_TYPE-1 = Follow Me
+IX_PRIORITY_TYPE-2 = Whole House
+
+IX_SCHEDULE_STATUS-0 = Pause
+IX_SCHEDULE_STATUS-1 = Resume
+
+IX_SCHEDULE_MODE-0 = Wake
+IX_SCHEDULE_MODE-1 = Away
+IX_SCHEDULE_MODE-2 = Home
+IX_SCHEDULE_MODE-3 = Sleep
+IX_SCHEDULE_MODE-4 = Custom
+
+IX_HOLD_STATUS-0 = No Hold
+IX_HOLD_STATUS-1 = Hold Until
+IX_HOLD_STATUS-2 = Permanent Hold
+
+EN_PM-0 = Running
+EN_PM-1 = Hold Next
+EN_PM-2 = Hold Indefinite
+
+# Indoor Air Sensor Node
+ND-HwhSensorC-NAME = Honeywell Indoor Air Sensor (C)
+ND-HwhSensorC-ICON = TempSensor
+ND-HwhSensorF-NAME = Honeywell Indoor Air Sensor (F)
+ND-HwhSensorF-ICON = TempSensor
+
+ST-140HS-GV0-NAME = Status
+ST-140HS-ST-NAME = Temperature
+ST-140HS-GV1-NAME = Average Temperature
+ST-140HS-GV2-NAME = Average Humidity
+ST-140HS-GV3-NAME = Motion Detected
+ST-140HS-GV4-NAME = Occupancy Detected
+ST-140HS-GV5-NAME = Battery Ok
+
+IX_SENSOR_STATUS-0 = Unknown
+IX_SENSOR_STATUS-1 = Ok
+IX_SENSOR_STATUS-2 = Not Available
+
+IX_SENSOR_BATTERY_STATUS-0 = Unknown
+IX_SENSOR_BATTERY_STATUS-1 = Ok
+IX_SENSOR_BATTERY_STATUS-2 = Low

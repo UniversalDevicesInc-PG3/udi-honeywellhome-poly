@@ -36,6 +36,144 @@ class DefaultApi(object):
             api_client = ApiClient()
         self.api_client = api_client
 
+    def v2_devices_thermostats_device_id_fan_post(self, apikey, user_ref_id, location_id, device_id, update_fan_mode, **kwargs):  # noqa: E501
+        """Change the current Fan setting for specified DeviceID.  # noqa: E501
+
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.v2_devices_thermostats_device_id_fan_post(apikey, user_ref_id, location_id, device_id, update_fan_mode, async_req=True)
+        >>> result = thread.get()
+
+        :param async_req bool: execute request asynchronously
+        :param str apikey: Your Client ID (required)
+        :param str user_ref_id: Your user ID (required)
+        :param str location_id: Location ID (required)
+        :param str device_id: Device ID (required)
+        :param UpdateFanMode update_fan_mode: (required)
+        :param _preload_content: if False, the urllib3.HTTPResponse object will
+                                 be returned without reading/decoding response
+                                 data. Default is True.
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :return: None
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+        kwargs['_return_http_data_only'] = True
+        return self.v2_devices_thermostats_device_id_fan_post_with_http_info(apikey, user_ref_id, location_id, device_id, update_fan_mode, **kwargs)  # noqa: E501
+
+    def v2_devices_thermostats_device_id_fan_post_with_http_info(self, apikey, user_ref_id, location_id, device_id, update_fan_mode, **kwargs):  # noqa: E501
+        """Change the current Fan setting for specified DeviceID.  # noqa: E501
+
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.v2_devices_thermostats_device_id_fan_post_with_http_info(apikey, user_ref_id, location_id, device_id, update_fan_mode, async_req=True)
+        >>> result = thread.get()
+
+        :param async_req bool: execute request asynchronously
+        :param str apikey: Your Client ID (required)
+        :param str user_ref_id: Your user ID (required)
+        :param str location_id: Location ID (required)
+        :param str device_id: Device ID (required)
+        :param UpdateFanMode update_fan_mode: (required)
+        :param _return_http_data_only: response data without head status code
+                                       and headers
+        :param _preload_content: if False, the urllib3.HTTPResponse object will
+                                 be returned without reading/decoding response
+                                 data. Default is True.
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :return: None
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+
+        local_var_params = locals()
+
+        all_params = ['apikey', 'user_ref_id', 'location_id', 'device_id', 'update_fan_mode']  # noqa: E501
+        all_params.append('async_req')
+        all_params.append('_return_http_data_only')
+        all_params.append('_preload_content')
+        all_params.append('_request_timeout')
+
+        for key, val in six.iteritems(local_var_params['kwargs']):
+            if key not in all_params:
+                raise ApiTypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method v2_devices_thermostats_device_id_fan_post" % key
+                )
+            local_var_params[key] = val
+        del local_var_params['kwargs']
+        # verify the required parameter 'apikey' is set
+        if ('apikey' not in local_var_params or
+                local_var_params['apikey'] is None):
+            raise ApiValueError("Missing the required parameter `apikey` when calling `v2_devices_thermostats_device_id_fan_post`")  # noqa: E501
+        # verify the required parameter 'user_ref_id' is set
+        if ('user_ref_id' not in local_var_params or
+                local_var_params['user_ref_id'] is None):
+            raise ApiValueError("Missing the required parameter `user_ref_id` when calling `v2_devices_thermostats_device_id_fan_post`")  # noqa: E501
+        # verify the required parameter 'location_id' is set
+        if ('location_id' not in local_var_params or
+                local_var_params['location_id'] is None):
+            raise ApiValueError("Missing the required parameter `location_id` when calling `v2_devices_thermostats_device_id_fan_post`")  # noqa: E501
+        # verify the required parameter 'device_id' is set
+        if ('device_id' not in local_var_params or
+                local_var_params['device_id'] is None):
+            raise ApiValueError("Missing the required parameter `device_id` when calling `v2_devices_thermostats_device_id_fan_post`")  # noqa: E501
+        # verify the required parameter 'update_fan_mode' is set
+        if ('update_fan_mode' not in local_var_params or
+                local_var_params['update_fan_mode'] is None):
+            raise ApiValueError("Missing the required parameter `update_fan_mode` when calling `v2_devices_thermostats_device_id_fan_post`")  # noqa: E501
+
+        collection_formats = {}
+
+        path_params = {}
+        if 'device_id' in local_var_params:
+            path_params['deviceId'] = local_var_params['device_id']  # noqa: E501
+
+        query_params = []
+        if 'apikey' in local_var_params:
+            query_params.append(('apikey', local_var_params['apikey']))  # noqa: E501
+        if 'location_id' in local_var_params:
+            query_params.append(('locationId', local_var_params['location_id']))  # noqa: E501
+
+        header_params = {}
+        if 'user_ref_id' in local_var_params:
+            header_params['UserRefId'] = local_var_params['user_ref_id']  # noqa: E501
+
+        form_params = []
+        local_var_files = {}
+
+        body_params = None
+        if 'update_fan_mode' in local_var_params:
+            body_params = local_var_params['update_fan_mode']
+        # HTTP header `Content-Type`
+        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
+            ['application/json'])  # noqa: E501
+
+        # Authentication setting
+        auth_settings = ['bearerAuth']  # noqa: E501
+
+        return self.api_client.call_api(
+            '/v2/devices/thermostats/{deviceId}/fan', 'POST',
+            path_params,
+            query_params,
+            header_params,
+            body=body_params,
+            post_params=form_params,
+            files=local_var_files,
+            response_type=None,  # noqa: E501
+            auth_settings=auth_settings,
+            async_req=local_var_params.get('async_req'),
+            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=local_var_params.get('_preload_content', True),
+            _request_timeout=local_var_params.get('_request_timeout'),
+            collection_formats=collection_formats)
+
     def v2_devices_thermostats_device_id_get(self, apikey, user_ref_id, location_id, device_id, **kwargs):  # noqa: E501
         """Return status of a thermostat  # noqa: E501
 
@@ -297,6 +435,282 @@ class DefaultApi(object):
             post_params=form_params,
             files=local_var_files,
             response_type='ThermostatSensor',  # noqa: E501
+            auth_settings=auth_settings,
+            async_req=local_var_params.get('async_req'),
+            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=local_var_params.get('_preload_content', True),
+            _request_timeout=local_var_params.get('_request_timeout'),
+            collection_formats=collection_formats)
+
+    def v2_devices_thermostats_device_id_post(self, apikey, user_ref_id, location_id, device_id, update_thermostat, **kwargs):  # noqa: E501
+        """Change the setpoint, system mode, and auto changeover status of a thermostat.  # noqa: E501
+
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.v2_devices_thermostats_device_id_post(apikey, user_ref_id, location_id, device_id, update_thermostat, async_req=True)
+        >>> result = thread.get()
+
+        :param async_req bool: execute request asynchronously
+        :param str apikey: Your Client ID (required)
+        :param str user_ref_id: Your user ID (required)
+        :param str location_id: Location ID (required)
+        :param str device_id: Device ID (required)
+        :param UpdateThermostat update_thermostat: (required)
+        :param _preload_content: if False, the urllib3.HTTPResponse object will
+                                 be returned without reading/decoding response
+                                 data. Default is True.
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :return: None
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+        kwargs['_return_http_data_only'] = True
+        return self.v2_devices_thermostats_device_id_post_with_http_info(apikey, user_ref_id, location_id, device_id, update_thermostat, **kwargs)  # noqa: E501
+
+    def v2_devices_thermostats_device_id_post_with_http_info(self, apikey, user_ref_id, location_id, device_id, update_thermostat, **kwargs):  # noqa: E501
+        """Change the setpoint, system mode, and auto changeover status of a thermostat.  # noqa: E501
+
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.v2_devices_thermostats_device_id_post_with_http_info(apikey, user_ref_id, location_id, device_id, update_thermostat, async_req=True)
+        >>> result = thread.get()
+
+        :param async_req bool: execute request asynchronously
+        :param str apikey: Your Client ID (required)
+        :param str user_ref_id: Your user ID (required)
+        :param str location_id: Location ID (required)
+        :param str device_id: Device ID (required)
+        :param UpdateThermostat update_thermostat: (required)
+        :param _return_http_data_only: response data without head status code
+                                       and headers
+        :param _preload_content: if False, the urllib3.HTTPResponse object will
+                                 be returned without reading/decoding response
+                                 data. Default is True.
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :return: None
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+
+        local_var_params = locals()
+
+        all_params = ['apikey', 'user_ref_id', 'location_id', 'device_id', 'update_thermostat']  # noqa: E501
+        all_params.append('async_req')
+        all_params.append('_return_http_data_only')
+        all_params.append('_preload_content')
+        all_params.append('_request_timeout')
+
+        for key, val in six.iteritems(local_var_params['kwargs']):
+            if key not in all_params:
+                raise ApiTypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method v2_devices_thermostats_device_id_post" % key
+                )
+            local_var_params[key] = val
+        del local_var_params['kwargs']
+        # verify the required parameter 'apikey' is set
+        if ('apikey' not in local_var_params or
+                local_var_params['apikey'] is None):
+            raise ApiValueError("Missing the required parameter `apikey` when calling `v2_devices_thermostats_device_id_post`")  # noqa: E501
+        # verify the required parameter 'user_ref_id' is set
+        if ('user_ref_id' not in local_var_params or
+                local_var_params['user_ref_id'] is None):
+            raise ApiValueError("Missing the required parameter `user_ref_id` when calling `v2_devices_thermostats_device_id_post`")  # noqa: E501
+        # verify the required parameter 'location_id' is set
+        if ('location_id' not in local_var_params or
+                local_var_params['location_id'] is None):
+            raise ApiValueError("Missing the required parameter `location_id` when calling `v2_devices_thermostats_device_id_post`")  # noqa: E501
+        # verify the required parameter 'device_id' is set
+        if ('device_id' not in local_var_params or
+                local_var_params['device_id'] is None):
+            raise ApiValueError("Missing the required parameter `device_id` when calling `v2_devices_thermostats_device_id_post`")  # noqa: E501
+        # verify the required parameter 'update_thermostat' is set
+        if ('update_thermostat' not in local_var_params or
+                local_var_params['update_thermostat'] is None):
+            raise ApiValueError("Missing the required parameter `update_thermostat` when calling `v2_devices_thermostats_device_id_post`")  # noqa: E501
+
+        collection_formats = {}
+
+        path_params = {}
+        if 'device_id' in local_var_params:
+            path_params['deviceId'] = local_var_params['device_id']  # noqa: E501
+
+        query_params = []
+        if 'apikey' in local_var_params:
+            query_params.append(('apikey', local_var_params['apikey']))  # noqa: E501
+        if 'location_id' in local_var_params:
+            query_params.append(('locationId', local_var_params['location_id']))  # noqa: E501
+
+        header_params = {}
+        if 'user_ref_id' in local_var_params:
+            header_params['UserRefId'] = local_var_params['user_ref_id']  # noqa: E501
+
+        form_params = []
+        local_var_files = {}
+
+        body_params = None
+        if 'update_thermostat' in local_var_params:
+            body_params = local_var_params['update_thermostat']
+        # HTTP header `Content-Type`
+        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
+            ['application/json'])  # noqa: E501
+
+        # Authentication setting
+        auth_settings = ['bearerAuth']  # noqa: E501
+
+        return self.api_client.call_api(
+            '/v2/devices/thermostats/{deviceId}', 'POST',
+            path_params,
+            query_params,
+            header_params,
+            body=body_params,
+            post_params=form_params,
+            files=local_var_files,
+            response_type=None,  # noqa: E501
+            auth_settings=auth_settings,
+            async_req=local_var_params.get('async_req'),
+            _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501
+            _preload_content=local_var_params.get('_preload_content', True),
+            _request_timeout=local_var_params.get('_request_timeout'),
+            collection_formats=collection_formats)
+
+    def v2_devices_thermostats_device_id_priority_put(self, apikey, user_ref_id, location_id, device_id, update_priority, **kwargs):  # noqa: E501
+        """Change the room priority settings for a T9/T10 thermostat.  # noqa: E501
+
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.v2_devices_thermostats_device_id_priority_put(apikey, user_ref_id, location_id, device_id, update_priority, async_req=True)
+        >>> result = thread.get()
+
+        :param async_req bool: execute request asynchronously
+        :param str apikey: Your Client ID (required)
+        :param str user_ref_id: Your user ID (required)
+        :param str location_id: Location ID (required)
+        :param str device_id: Device ID (required)
+        :param UpdatePriority update_priority: (required)
+        :param _preload_content: if False, the urllib3.HTTPResponse object will
+                                 be returned without reading/decoding response
+                                 data. Default is True.
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :return: None
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+        kwargs['_return_http_data_only'] = True
+        return self.v2_devices_thermostats_device_id_priority_put_with_http_info(apikey, user_ref_id, location_id, device_id, update_priority, **kwargs)  # noqa: E501
+
+    def v2_devices_thermostats_device_id_priority_put_with_http_info(self, apikey, user_ref_id, location_id, device_id, update_priority, **kwargs):  # noqa: E501
+        """Change the room priority settings for a T9/T10 thermostat.  # noqa: E501
+
+        This method makes a synchronous HTTP request by default. To make an
+        asynchronous HTTP request, please pass async_req=True
+        >>> thread = api.v2_devices_thermostats_device_id_priority_put_with_http_info(apikey, user_ref_id, location_id, device_id, update_priority, async_req=True)
+        >>> result = thread.get()
+
+        :param async_req bool: execute request asynchronously
+        :param str apikey: Your Client ID (required)
+        :param str user_ref_id: Your user ID (required)
+        :param str location_id: Location ID (required)
+        :param str device_id: Device ID (required)
+        :param UpdatePriority update_priority: (required)
+        :param _return_http_data_only: response data without head status code
+                                       and headers
+        :param _preload_content: if False, the urllib3.HTTPResponse object will
+                                 be returned without reading/decoding response
+                                 data. Default is True.
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :return: None
+                 If the method is called asynchronously,
+                 returns the request thread.
+        """
+
+        local_var_params = locals()
+
+        all_params = ['apikey', 'user_ref_id', 'location_id', 'device_id', 'update_priority']  # noqa: E501
+        all_params.append('async_req')
+        all_params.append('_return_http_data_only')
+        all_params.append('_preload_content')
+        all_params.append('_request_timeout')
+
+        for key, val in six.iteritems(local_var_params['kwargs']):
+            if key not in all_params:
+                raise ApiTypeError(
+                    "Got an unexpected keyword argument '%s'"
+                    " to method v2_devices_thermostats_device_id_priority_put" % key
+                )
+            local_var_params[key] = val
+        del local_var_params['kwargs']
+        # verify the required parameter 'apikey' is set
+        if ('apikey' not in local_var_params or
+                local_var_params['apikey'] is None):
+            raise ApiValueError("Missing the required parameter `apikey` when calling `v2_devices_thermostats_device_id_priority_put`")  # noqa: E501
+        # verify the required parameter 'user_ref_id' is set
+        if ('user_ref_id' not in local_var_params or
+                local_var_params['user_ref_id'] is None):
+            raise ApiValueError("Missing the required parameter `user_ref_id` when calling `v2_devices_thermostats_device_id_priority_put`")  # noqa: E501
+        # verify the required parameter 'location_id' is set
+        if ('location_id' not in local_var_params or
+                local_var_params['location_id'] is None):
+            raise ApiValueError("Missing the required parameter `location_id` when calling `v2_devices_thermostats_device_id_priority_put`")  # noqa: E501
+        # verify the required parameter 'device_id' is set
+        if ('device_id' not in local_var_params or
+                local_var_params['device_id'] is None):
+            raise ApiValueError("Missing the required parameter `device_id` when calling `v2_devices_thermostats_device_id_priority_put`")  # noqa: E501
+        # verify the required parameter 'update_priority' is set
+        if ('update_priority' not in local_var_params or
+                local_var_params['update_priority'] is None):
+            raise ApiValueError("Missing the required parameter `update_priority` when calling `v2_devices_thermostats_device_id_priority_put`")  # noqa: E501
+
+        collection_formats = {}
+
+        path_params = {}
+        if 'device_id' in local_var_params:
+            path_params['deviceId'] = local_var_params['device_id']  # noqa: E501
+
+        query_params = []
+        if 'apikey' in local_var_params:
+            query_params.append(('apikey', local_var_params['apikey']))  # noqa: E501
+        if 'location_id' in local_var_params:
+            query_params.append(('locationId', local_var_params['location_id']))  # noqa: E501
+
+        header_params = {}
+        if 'user_ref_id' in local_var_params:
+            header_params['UserRefId'] = local_var_params['user_ref_id']  # noqa: E501
+
+        form_params = []
+        local_var_files = {}
+
+        body_params = None
+        if 'update_priority' in local_var_params:
+            body_params = local_var_params['update_priority']
+        # HTTP header `Content-Type`
+        header_params['Content-Type'] = self.api_client.select_header_content_type(  # noqa: E501
+            ['application/json'])  # noqa: E501
+
+        # Authentication setting
+        auth_settings = ['bearerAuth']  # noqa: E501
+
+        return self.api_client.call_api(
+            '/v2/devices/thermostats/{deviceId}/priority', 'PUT',
+            path_params,
+            query_params,
+            header_params,
+            body=body_params,
+            post_params=form_params,
+            files=local_var_files,
+            response_type=None,  # noqa: E501
             auth_settings=auth_settings,
             async_req=local_var_params.get('async_req'),
             _return_http_data_only=local_var_params.get('_return_http_data_only'),  # noqa: E501

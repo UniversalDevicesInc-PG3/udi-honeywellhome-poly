@@ -60,8 +60,12 @@ class Thermostat(object):
         'max_heat_setpoint': 'float',
         'min_cool_setpoint': 'float',
         'max_cool_setpoint': 'float',
+        'indoor_humidity': 'int',
+        'indoor_humidity_status': 'str',
+        'device_model': 'str',
         'changeable_values': 'ThermostatChangeableValues',
-        'operation_status': 'ThermostatOperationStatus'
+        'operation_status': 'ThermostatOperationStatus',
+        'priority_type': 'str'
     }
 
     attribute_map = {
@@ -94,11 +98,15 @@ class Thermostat(object):
         'max_heat_setpoint': 'maxHeatSetpoint',
         'min_cool_setpoint': 'minCoolSetpoint',
         'max_cool_setpoint': 'maxCoolSetpoint',
+        'indoor_humidity': 'indoorHumidity',
+        'indoor_humidity_status': 'indoorHumidityStatus',
+        'device_model': 'deviceModel',
         'changeable_values': 'changeableValues',
-        'operation_status': 'operationStatus'
+        'operation_status': 'operationStatus',
+        'priority_type': 'priorityType'
     }
 
-    def __init__(self, groups=None, displayed_outdoor_humidity=None, vacation_hold=None, current_schedule_period=None, schedule_capabilities=None, schedule_type=None, schedule_status=None, allowed_time_increments=None, settings=None, device_class=None, device_type=None, device_id=None, user_defined_device_name=None, name=None, is_alive=None, is_upgrading=None, is_provisioned=None, mac_id=None, device_settings=None, units=None, indoor_temperature=None, outdoor_temperature=None, allowed_modes=None, deadband=None, has_dual_setpoint_status=None, min_heat_setpoint=None, max_heat_setpoint=None, min_cool_setpoint=None, max_cool_setpoint=None, changeable_values=None, operation_status=None):  # noqa: E501
+    def __init__(self, groups=None, displayed_outdoor_humidity=None, vacation_hold=None, current_schedule_period=None, schedule_capabilities=None, schedule_type=None, schedule_status=None, allowed_time_increments=None, settings=None, device_class=None, device_type=None, device_id=None, user_defined_device_name=None, name=None, is_alive=None, is_upgrading=None, is_provisioned=None, mac_id=None, device_settings=None, units=None, indoor_temperature=None, outdoor_temperature=None, allowed_modes=None, deadband=None, has_dual_setpoint_status=None, min_heat_setpoint=None, max_heat_setpoint=None, min_cool_setpoint=None, max_cool_setpoint=None, indoor_humidity=None, indoor_humidity_status=None, device_model=None, changeable_values=None, operation_status=None, priority_type=None):  # noqa: E501
         """Thermostat - a model defined in OpenAPI"""  # noqa: E501
 
         self._groups = None
@@ -130,8 +138,12 @@ class Thermostat(object):
         self._max_heat_setpoint = None
         self._min_cool_setpoint = None
         self._max_cool_setpoint = None
+        self._indoor_humidity = None
+        self._indoor_humidity_status = None
+        self._device_model = None
         self._changeable_values = None
         self._operation_status = None
+        self._priority_type = None
         self.discriminator = None
 
         if groups is not None:
@@ -192,10 +204,18 @@ class Thermostat(object):
             self.min_cool_setpoint = min_cool_setpoint
         if max_cool_setpoint is not None:
             self.max_cool_setpoint = max_cool_setpoint
+        if indoor_humidity is not None:
+            self.indoor_humidity = indoor_humidity
+        if indoor_humidity_status is not None:
+            self.indoor_humidity_status = indoor_humidity_status
+        if device_model is not None:
+            self.device_model = device_model
         if changeable_values is not None:
             self.changeable_values = changeable_values
         if operation_status is not None:
             self.operation_status = operation_status
+        if priority_type is not None:
+            self.priority_type = priority_type
 
     @property
     def groups(self):
@@ -807,6 +827,69 @@ class Thermostat(object):
         self._max_cool_setpoint = max_cool_setpoint
 
     @property
+    def indoor_humidity(self):
+        """Gets the indoor_humidity of this Thermostat.  # noqa: E501
+
+
+        :return: The indoor_humidity of this Thermostat.  # noqa: E501
+        :rtype: int
+        """
+        return self._indoor_humidity
+
+    @indoor_humidity.setter
+    def indoor_humidity(self, indoor_humidity):
+        """Sets the indoor_humidity of this Thermostat.
+
+
+        :param indoor_humidity: The indoor_humidity of this Thermostat.  # noqa: E501
+        :type: int
+        """
+
+        self._indoor_humidity = indoor_humidity
+
+    @property
+    def indoor_humidity_status(self):
+        """Gets the indoor_humidity_status of this Thermostat.  # noqa: E501
+
+
+        :return: The indoor_humidity_status of this Thermostat.  # noqa: E501
+        :rtype: str
+        """
+        return self._indoor_humidity_status
+
+    @indoor_humidity_status.setter
+    def indoor_humidity_status(self, indoor_humidity_status):
+        """Sets the indoor_humidity_status of this Thermostat.
+
+
+        :param indoor_humidity_status: The indoor_humidity_status of this Thermostat.  # noqa: E501
+        :type: str
+        """
+
+        self._indoor_humidity_status = indoor_humidity_status
+
+    @property
+    def device_model(self):
+        """Gets the device_model of this Thermostat.  # noqa: E501
+
+
+        :return: The device_model of this Thermostat.  # noqa: E501
+        :rtype: str
+        """
+        return self._device_model
+
+    @device_model.setter
+    def device_model(self, device_model):
+        """Sets the device_model of this Thermostat.
+
+
+        :param device_model: The device_model of this Thermostat.  # noqa: E501
+        :type: str
+        """
+
+        self._device_model = device_model
+
+    @property
     def changeable_values(self):
         """Gets the changeable_values of this Thermostat.  # noqa: E501
 
@@ -847,6 +930,27 @@ class Thermostat(object):
         """
 
         self._operation_status = operation_status
+
+    @property
+    def priority_type(self):
+        """Gets the priority_type of this Thermostat.  # noqa: E501
+
+
+        :return: The priority_type of this Thermostat.  # noqa: E501
+        :rtype: str
+        """
+        return self._priority_type
+
+    @priority_type.setter
+    def priority_type(self, priority_type):
+        """Sets the priority_type of this Thermostat.
+
+
+        :param priority_type: The priority_type of this Thermostat.  # noqa: E501
+        :type: str
+        """
+
+        self._priority_type = priority_type
 
     def to_dict(self):
         """Returns the model properties as a dict"""
