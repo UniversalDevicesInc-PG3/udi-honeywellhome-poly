@@ -22,7 +22,7 @@ class Controller(polyinterface.Controller):
         self._client_id = ""
         self._client_secret = ""
         self._user_id = ""
-        self._api_baseurl = "https://connectedhome-sandbox.apigee.net"
+        self._api_baseurl = "https://api.honeywell.com"
         self._api = None
 
         # Don't enable in deployed node server. I use these so I can run/debug directly in IntelliJ.
