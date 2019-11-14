@@ -155,6 +155,7 @@ class Thermostat(polyinterface.Node):
             c_setpoint = thermostat.changeable_values.cool_setpoint
             mode = thermostat.changeable_values.mode
             auto_changeover_active = thermostat.changeable_values.auto_changeover_active
+            next_period_time = thermostat.changeable_values.next_period_time
 
             updates = {
                 'CLISPH': to_driver_value(h_setpoint, True),
@@ -163,7 +164,9 @@ class Thermostat(polyinterface.Node):
             }
 
             if driver == 'CLISPH':
-                self._api.set_setpoint(self._location_id, self._thermostat_id, cmd['value'], c_setpoint, self._use_celsius, mode, auto_changeover_active)
+                # There is a bug in the API when setting heat point. Basically TemporaryHold doesn't work.
+                # So instead we need to use HoldUntil with next period time which is essentially the same thing.
+                self._api.set_setpoint(self._location_id, self._thermostat_id, cmd['value'], c_setpoint, self._use_celsius, mode, auto_changeover_active, "HoldUntil", next_period_time)
                 updates['CLISPH'] = to_driver_value(cmd['value'], True)
             elif driver == 'CLISPC':
                 self._api.set_setpoint(self._location_id, self._thermostat_id, h_setpoint, cmd['value'], self._use_celsius, mode, auto_changeover_active)
