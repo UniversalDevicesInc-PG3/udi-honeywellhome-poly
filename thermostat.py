@@ -67,9 +67,10 @@ runningStateMap = {
 }
 
 priorityTypeMap = {
-    'PickARoom': 0,
-    'FollowMe': 1,
-    'WholeHouse': 2
+    'NotSupported': 0,
+    'PickARoom': 1,
+    'FollowMe': 2,
+    'WholeHouse': 3
 }
 
 scheduleStatusMap = {
@@ -78,11 +79,12 @@ scheduleStatusMap = {
 }
 
 scheduleModeMap = {
-    'Wake': 0,
-    'Away': 1,
-    'Home': 2,
-    'Sleep': 3,
-    'Custom': 4
+    'NotSupported': 0,
+    'Wake': 1,
+    'Away': 2,
+    'Home': 3,
+    'Sleep': 4,
+    'Custom': 5
 }
 
 setHoldStatusMap = {
@@ -129,19 +131,28 @@ class Thermostat(polyinterface.Node):
                 'CLIHUM': to_driver_value(thermostat.indoor_humidity, True),
                 'CLIHCS': runningStateMap[thermostat.operation_status.mode],
                 'CLIFRS': 1 if thermostat.operation_status.fan_request or thermostat.operation_status.circulation_fan_request else 0,  # This doesn't seem to work as expected
-                'GV1': priorityTypeMap[thermostat.priority_type],
+                'GV1': priorityTypeMap['NotSupported'],
                 'GV2': scheduleStatusMap[thermostat.schedule_status],
-                'GV3': scheduleModeMap[thermostat.current_schedule_period.period] if thermostat.current_schedule_period.period in scheduleModeMap else scheduleModeMap['Custom'],
+                'GV3': scheduleModeMap['NotSupported'],
                 'GV4': holdStatusMap[thermostat.changeable_values.thermostat_setpoint_status],
-                'GV5': int(thermostat.vacation_hold.enabled),
+                'GV5': False,
                 'GV6': int(thermostat.is_alive)
             }
+
+            if thermostat.priority_type is not None:
+                updates['GV1'] = priorityTypeMap[thermostat.priority_type]
+
+            if thermostat.current_schedule_period is not None:
+                updates['GV3'] = scheduleModeMap[thermostat.current_schedule_period.period] if thermostat.current_schedule_period.period in scheduleModeMap else scheduleModeMap['Custom']
+
+            if thermostat.vacation_hold is not None:
+                updates['GV5'] = int(thermostat.vacation_hold.enabled)
 
             for key, value in updates.items():
                 self.l_debug('_update', 'setDriver({},{})'.format(key, value))
                 self.setDriver(key, value)
         except Exception as ex:
-            self.l_error("_query", "Refreshing thermostat {0} failed {1}".format(self.address, ex))
+            LOGGER.exception("Refreshing thermostat %s failed %s", self.address, ex)
 
         self.reportDrivers()
 
@@ -180,7 +191,7 @@ class Thermostat(polyinterface.Node):
                 self.l_debug('_update', 'setDriver({},{})'.format(key, value))
                 self.setDriver(key, value)
         except Exception as ex:
-            self.l_error("_setPF", "Could not set thermostat set point because {0}".format(self.address, ex))
+            LOGGER.exception("Could not set thermostat set point %s because %s", self.address, ex)
 
     def cmdSetHoldStatus(self, cmd):
         try:
@@ -202,7 +213,7 @@ class Thermostat(polyinterface.Node):
                 self.setDriver(key, value)
 
         except Exception as ex:
-            self.l_error("_setPF", "Could not set thermostat fan mode because {0}".format(self.address, ex))
+            LOGGER.exception("Could not set thermostat hold status %s because %s", self.address, ex)
 
     def cmdSetFS(self, cmd):
         try:
@@ -217,16 +228,7 @@ class Thermostat(polyinterface.Node):
                 self.setDriver(key, value)
 
         except Exception as ex:
-            self.l_error("_setPF", "Could not set thermostat fan mode because {0}".format(self.address, ex))
-
-    def l_info(self, name, string):
-        LOGGER.info("%s:%s:%s: %s" % (self.id, self.name, name, string))
-
-    def l_error(self, name, string):
-        LOGGER.error("%s:%s:%s: %s" % (self.id, self.name, name, string))
-
-    def l_warning(self, name, string):
-        LOGGER.warning("%s:%s:%s: %s" % (self.id, self.name, name, string))
+            LOGGER.exception("Could not set thermostat fan mode %s because %s", self.address, ex)
 
     def l_debug(self, name, string):
         LOGGER.debug("%s:%s:%s:%s: %s" % (self.id, self.address, self.name, name, string))

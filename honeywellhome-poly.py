@@ -65,7 +65,7 @@ class Controller(polyinterface.Controller):
             LOGGER.info("Discovery Finished")
         except Exception as ex:
             self.addNotice({'discovery_failed': 'Discovery failed please check logs for a more detailed error.'})
-            LOGGER.error("Discovery failed with error {0}".format(ex))
+            LOGGER.exception("Discovery failed with error %s", ex)
 
     def add_thermostat(self, location_id, location_name, thermostat, update):
         t_name = location_name + ' - ' + thermostat['userDefinedDeviceName']
@@ -75,6 +75,9 @@ class Controller(polyinterface.Controller):
 
         LOGGER.debug('Adding thermostat with id {0} and name {1} and addr {2}'.format(t_device_id, t_name, t_addr))
         self.addNode(Thermostat(self, t_addr, t_addr, t_name, self._api, location_id, t_device_id, use_celsius), update)
+
+        if 'groups' not in thermostat:
+            return
 
         for group in thermostat['groups']:
             group_id = group['id']
@@ -127,12 +130,12 @@ class Controller(polyinterface.Controller):
         else:
             return True
 
-    def remove_notices_all(self,command):
+    def remove_notices_all(self, command):
         LOGGER.info('remove_notices_all:')
         # Remove all existing notices
         self.removeNoticesAll()
 
-    def update_profile(self,command):
+    def update_profile(self, command):
         LOGGER.info('update_profile:')
         st = self.poly.installprofile()
         return st
