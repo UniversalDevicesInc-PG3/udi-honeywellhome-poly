@@ -37,8 +37,10 @@ IX_SCHEDULE_MODE-4 = Sleep
 IX_SCHEDULE_MODE-5 = Custom
 
 IX_HOLD_STATUS-0 = No Hold
-IX_HOLD_STATUS-1 = Hold Until
+IX_HOLD_STATUS-1 = Temporary Hold
 IX_HOLD_STATUS-2 = Permanent Hold
+IX_HOLD_STATUS-3 = Hold Until
+IX_HOLD_STATUS-4 = Vaction Hold
 
 EN_PM-0 = Running
 EN_PM-1 = Hold Next
