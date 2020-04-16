@@ -29,6 +29,8 @@
       <st id="GV4" editor="I_HOLD_STATUS" />
       <st id="GV5" editor="BOOL" /> <!-- Vacation Hold -->
       <st id="GV6" editor="BOOL" /> <!-- Is Active -->
+      <st id="GV7" editor="SECONDS" hide="True" /> <!-- Time of poll Epoch -->
+      <st id="GV8" editor="SECONDS" hide="True" /> <!-- Time of poll since midnight -->
     </sts>
     <cmds>
       <sends />
@@ -65,6 +67,8 @@
       <st id="GV4" editor="I_HOLD_STATUS" />
       <st id="GV5" editor="BOOL" /> <!-- Vacation Hold -->
       <st id="GV6" editor="BOOL" /> <!-- Is Active -->
+      <st id="GV7" editor="SECONDS" hide="True" /> <!-- Time of poll Epoch -->
+      <st id="GV8" editor="SECONDS" hide="True" /> <!-- Time of poll since midnight -->
     </sts>
     <cmds>
       <sends />
@@ -97,6 +101,8 @@
       <st id="GV3" editor="BOOL" /> <!-- Motion -->
       <st id="GV4" editor="BOOL" /> <!-- Occupancy -->
       <st id="GV5" editor="I_SENSOR_BATTERY_STATUS" /> <!-- Battery Status -->
+      <st id="GV7" editor="SECONDS" hide="True" /> <!-- Time of poll Epoch -->
+      <st id="GV8" editor="SECONDS" hide="True" /> <!-- Time of poll since midnight -->
     </sts>
   </nodeDef>
   <nodeDef id="HwhSensorC" nodeType="140" nls="140HS" >
@@ -109,6 +115,8 @@
       <st id="GV3" editor="BOOL" /> <!-- Motion -->
       <st id="GV4" editor="BOOL" /> <!-- Occupancy -->
       <st id="GV5" editor="I_SENSOR_BATTERY_STATUS" /> <!-- Battery Status -->
+      <st id="GV7" editor="SECONDS" hide="True" /> <!-- Time of poll Epoch -->
+      <st id="GV8" editor="SECONDS" hide="True" /> <!-- Time of poll since midnight -->
     </sts>
   </nodeDef>
 </nodeDefs>

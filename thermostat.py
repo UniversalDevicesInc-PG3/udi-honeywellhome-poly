@@ -29,6 +29,8 @@ driversMap = {
         {'driver': 'GV4', 'value': 0, 'uom': '25'},
         {'driver': 'GV5', 'value': int(False), 'uom': '2'},
         {'driver': 'GV6', 'value': int(False), 'uom': '2'},
+        {'driver': 'GV7', 'value': 0, 'uom': '57'},  # Poll time Epoch
+        {'driver': 'GV8', 'value': 0, 'uom': '57'},  # Poll time since midnight
     ],
     'HwhC': [
         {'driver': 'ST', 'value': 0, 'uom': '4'},
@@ -45,6 +47,8 @@ driversMap = {
         {'driver': 'GV4', 'value': 0, 'uom': '25'},
         {'driver': 'GV5', 'value': int(False), 'uom': '2'},
         {'driver': 'GV6', 'value': int(False), 'uom': '2'},
+        {'driver': 'GV7', 'value': 0, 'uom': '57'},  # Poll time Epoch
+        {'driver': 'GV8', 'value': 0, 'uom': '57'},  # Poll time since midnight
     ]
 }
 
@@ -151,7 +155,9 @@ class Thermostat(polyinterface.Node):
                 'GV3': scheduleModeMap['NotSupported'],
                 'GV4': holdStatusMap[thermostat.changeable_values.thermostat_setpoint_status],
                 'GV5': False,
-                'GV6': int(thermostat.is_alive)
+                'GV6': int(thermostat.is_alive),
+                'GV7': int(time.time()),
+                'GV8': int(get_seconds_from_midnight()),
             }
 
             if thermostat.priority_type is not None:
