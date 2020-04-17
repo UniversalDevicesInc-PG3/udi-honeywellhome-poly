@@ -29,8 +29,7 @@ driversMap = {
         {'driver': 'GV4', 'value': 0, 'uom': '25'},
         {'driver': 'GV5', 'value': int(False), 'uom': '2'},
         {'driver': 'GV6', 'value': int(False), 'uom': '2'},
-        {'driver': 'GV7', 'value': 0, 'uom': '57'},  # Poll time Epoch
-        {'driver': 'GV8', 'value': 0, 'uom': '57'},  # Poll time since midnight
+        {'driver': 'GV7', 'value': 0, 'uom': '110'},  # Poll time Epoch
     ],
     'HwhC': [
         {'driver': 'ST', 'value': 0, 'uom': '4'},
@@ -47,8 +46,7 @@ driversMap = {
         {'driver': 'GV4', 'value': 0, 'uom': '25'},
         {'driver': 'GV5', 'value': int(False), 'uom': '2'},
         {'driver': 'GV6', 'value': int(False), 'uom': '2'},
-        {'driver': 'GV7', 'value': 0, 'uom': '57'},  # Poll time Epoch
-        {'driver': 'GV8', 'value': 0, 'uom': '57'},  # Poll time since midnight
+        {'driver': 'GV7', 'value': 0, 'uom': '110'},  # Poll time Epoch
     ]
 }
 
@@ -157,7 +155,6 @@ class Thermostat(polyinterface.Node):
                 'GV5': False,
                 'GV6': int(thermostat.is_alive),
                 'GV7': int(time.time()),
-                'GV8': int(get_seconds_from_midnight()),
             }
 
             if thermostat.priority_type is not None:

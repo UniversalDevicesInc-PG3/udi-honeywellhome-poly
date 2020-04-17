@@ -20,6 +20,7 @@ ST-140H-GV3-NAME = Current Schedule Mode
 ST-140H-GV4-NAME = Hold Status
 ST-140H-GV5-NAME = Vacation Hold
 ST-140H-GV6-NAME = Connected
+ST-140H-GV7-NAME = Last Poll (Unix Time)
 
 IX_PRIORITY_TYPE-0 = Not Supported
 IX_PRIORITY_TYPE-1 = Pick A Room
@@ -59,6 +60,7 @@ ST-140HS-GV2-NAME = Average Humidity
 ST-140HS-GV3-NAME = Motion Detected
 ST-140HS-GV4-NAME = Occupancy Detected
 ST-140HS-GV5-NAME = Battery Ok
+ST-140HS-GV7-NAME = Last Poll (Unix Time)
 
 IX_SENSOR_STATUS-0 = Unknown
 IX_SENSOR_STATUS-1 = Ok

@@ -59,6 +59,10 @@ class Controller(polyinterface.Controller):
 
             locations = self._api.get_locations()
             for location in locations:
+                if location.devices is None:
+                    LOGGER.warn("There were no devices for location {0}", location.name)
+                    continue
+
                 for thermostat in location.devices:
                     self.add_thermostat(location.location_id, location.name, thermostat, update)
 

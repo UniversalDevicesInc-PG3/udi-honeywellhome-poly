@@ -23,8 +23,7 @@ driversMap = {
         {'driver': 'GV3', 'value': int(False), 'uom': '2'},  # Motion
         {'driver': 'GV4', 'value': int(False), 'uom': '2'},  # Occupancy
         {'driver': 'GV5', 'value': 0, 'uom': '25'},  # Battery Status
-        {'driver': 'GV7', 'value': 0, 'uom': '57'},  # Poll time Epoch
-        {'driver': 'GV8', 'value': 0, 'uom': '57'},  # Poll time since midnight
+        {'driver': 'GV7', 'value': 0, 'uom': '110'},  # Poll time Epoch
     ],
     'HwhSensorC': [
         {'driver': 'GV0', 'value': 0, 'uom': '25'},  # Status
@@ -35,8 +34,7 @@ driversMap = {
         {'driver': 'GV3', 'value': int(False), 'uom': '2'},  # Motion
         {'driver': 'GV4', 'value': int(False), 'uom': '2'},  # Occupancy
         {'driver': 'GV5', 'value': 0, 'uom': '25'},  # Battery Status
-        {'driver': 'GV7', 'value': 0, 'uom': '57'},  # Poll time Epoch
-        {'driver': 'GV8', 'value': 0, 'uom': '57'},  # Poll time since midnight
+        {'driver': 'GV7', 'value': 0, 'uom': '110'},  # Poll time Epoch
     ]
 }
 
@@ -97,7 +95,6 @@ class IndoorAirSensor(polyinterface.Node):
                 'GV4': int(sensor_accessories.accessory_value.occupancy_det),
                 'GV5': sensorBatteryStatusMap[sensor_accessories.accessory_value.battery_status] if sensor_accessories.accessory_value.battery_status in sensorBatteryStatusMap else sensorBatteryStatusMap['Unknown'],
                 'GV7': int(time.time()),
-                'GV8': int(get_seconds_from_midnight()),
             }
 
             for key, value in updates.items():

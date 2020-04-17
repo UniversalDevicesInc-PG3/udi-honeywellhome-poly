@@ -4,7 +4,7 @@
   </editor>
 
   <editor id="SECONDS">
-    <range uom="57" />
+    <range uom="110" min="0" max="5000000000" step="1" prec="0"/>
   </editor>
 
   <!-- Temperature -->
