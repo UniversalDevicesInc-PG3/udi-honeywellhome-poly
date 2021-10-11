@@ -1,24 +1,3 @@
-# Polyglot Honeywell Home
-
-## Description
-This project is a node server to integrate Honeywell Home thermostats into the UDI ISY. It is designed to run in UDI's Polyglot v3.
-
-## Screenshots
-
-#### Thermostat
-![Thermostat](docs/demo01.png)
-
-#### Remote Sensor
-![Sensor](docs/demo02.png)
-
-## Requirements
-* [Honeywell Home](https://www.honeywellhome.com/) Wifi connected thermostat and Honeywell Home Login
-* [Honeywell Developer Account](https://developer.honeywell.com) Free Honeywell Home developer account.
-
-## Installation
-1. Go to the Polyglot Store in the UI and install.
-3. From the Polyglot dashboard, select the Honewell Home node server and configure (see configuration options below).
-
 ## Configuration
 
 This node server uses uses OAuth client credentials to authenticate to the API. To configure the node server we need to follow the following steps

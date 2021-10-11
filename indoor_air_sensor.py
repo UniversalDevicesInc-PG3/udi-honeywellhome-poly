@@ -1,17 +1,9 @@
-try:
-    import polyinterface
-
-    CLOUD = False
-except ImportError:
-    import pgc_interface as polyinterface
-
-    CLOUD = True
-
+import udi_interface
 import time
 from copy import deepcopy
 from utilities import *
 
-LOGGER = polyinterface.LOGGER
+LOGGER = udi_interface.LOGGER
 
 driversMap = {
     'HwhSensorF': [
@@ -51,7 +43,7 @@ sensorBatteryStatusMap = {
 }
 
 
-class IndoorAirSensor(polyinterface.Node):
+class IndoorAirSensor(udi_interface.Node):
 
     def __init__(self, controller, primary, address, name, api, location_id, thermostat_id, group_id, sensor_id, is_celsius):
         self.controller = controller
@@ -63,9 +55,11 @@ class IndoorAirSensor(polyinterface.Node):
         self._use_celsius = is_celsius
         self.type = 'sensor'
         self.id = 'HwhSensorF' if self._use_celsius else 'HwhSensorF'
-        self.drivers = self._convertDrivers(driversMap[self.id]) if CLOUD else deepcopy(driversMap[self.id])
+        self.drivers = deepcopy(driversMap[self.id])
 
         super(IndoorAirSensor, self).__init__(controller, primary, address, name)
+
+        controller.subscribe(controller.START, self.start, address)
 
     def start(self):
         self.query()

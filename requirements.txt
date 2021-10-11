@@ -1,4 +1,4 @@
-polyinterface>=2.0.29
+udi_interface>=3.0.18
 
 oauthlib>=3.0.2
 requests_oauthlib>=1.2.0

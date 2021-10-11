@@ -1,8 +1,4 @@
-try:
-    import polyinterface
-except ImportError:
-    import pgc_interface as polyinterface
-
+import udi_interface
 import honeywell_home
 from honeywell_home.rest import ApiException
 from retry import retry
@@ -14,7 +10,7 @@ from requests_oauthlib.oauth2_session import OAuth2Session
 from urllib.parse import urljoin
 from utilities import *
 
-LOGGER = polyinterface.LOGGER
+LOGGER = udi_interface.LOGGER
 
 
 class ApiHelper:

@@ -2,22 +2,18 @@
 from thermostat import Thermostat
 from indoor_air_sensor import IndoorAirSensor
 
-try:
-    import polyinterface
-except ImportError:
-    import pgc_interface as polyinterface
-
+import udi_interface
 import sys
 import os
 
 from api_helper import ApiHelper
 
-LOGGER = polyinterface.LOGGER
+LOGGER = udi_interface.LOGGER
 
 
-class Controller(polyinterface.Controller):
-    def __init__(self, polyglot):
-        super(Controller, self).__init__(polyglot)
+class Controller(udi_interface.Node):
+    def __init__(self, polyglot, primary, address, name):
+        super(Controller, self).__init__(polyglot, primary, address, name)
         self.name = "Honeywell Home Controller"
         self._client_id = ""
         self._client_secret = ""
@@ -25,31 +21,55 @@ class Controller(polyinterface.Controller):
         self._api_baseurl = "https://api.honeywell.com"
         self._api = None
 
-        # Don't enable in deployed node server. I use these so I can run/debug directly in IntelliJ.
-        LOGGER.debug("Profile Num: " + os.environ.get('PROFILE_NUM'))
-        LOGGER.debug("MQTT Host: " + os.environ.get('MQTT_HOST'))
-        LOGGER.debug("MQTT Port: " + os.environ.get('MQTT_PORT'))
-        LOGGER.debug("Token: " + os.environ.get('TOKEN'))
+        polyglot.subscribe(polyglot.CUSTOMPARAMS, self.parameterHandler)
+        polyglot.subscribe(polyglot.START, self.start, address)
+        polyglot.subscribe(polyglot.POLL, self.poll)
 
-    def start(self):
-        LOGGER.info('Started Honeywell Home Nodeserver')
-        if self.check_params():
+        polyglot.ready()
+        polyglot.addNode(self)
+
+    def parameterHandler(self, params):
+        if 'client_id' in params:
+            self._client_id = params['client_id']
+        else:
+            LOGGER.error('check_params: client_id not defined in customParams, please add it.  Using {}'.format(self._client_id))
+
+        if 'client_secret' in params:
+            self._client_secret = params['client_secret']
+        else:
+            LOGGER.error('check_params: client_secret not defined in customParams, please add it.  Using {}'.format(self._client_secret))
+
+        if 'user_id' in params:
+            self._user_id = params['user_id']
+        else:
+            LOGGER.error('check_params: user_id not defined in customParams, please add it.  Using {}'.format(self._user_id))
+
+        self.poly.Notices.clear()
+        # Add a notice if they need to change the user/password from the default.
+        if self._client_id == "" or self._client_secret == "" or self._user_id == "":
+            self.poly.Notices['mynotice'] = 'Please set proper client_id and client_secret in configuration page. See:<br />https://github.com/dbarentine/udi-honeywellhome-poly/blob/master/README.md'
+            return False
+        else:
             self._api = ApiHelper(self._api_baseurl, self._client_id, self._client_secret, self._user_id)
             self.discover()
             self.setDriver('ST', 1)
+            return True
 
-    def shortPoll(self):
-        pass
+    def start(self):
+        LOGGER.info('Started Honeywell Home Nodeserver')
+        self.poly.updateProfile()
+        self.poly.setCustomParamsDoc()
 
-    def longPoll(self):
-        self.query()
+    def poll(self, polltype):
+        if 'longPoll' in polltype:
+            self.query()
 
     def query(self):
-        for node in self.nodes:
-            if self.nodes[node] is not self:
-                self.nodes[node].query()
+        for node in self.poly.nodes():
+            if node is not self:
+                node.query()
 
-            self.nodes[node].reportDrivers()
+            node.reportDrivers()
 
     def discover(self, *args, **kwargs):
         try:
@@ -68,7 +88,7 @@ class Controller(polyinterface.Controller):
 
             LOGGER.info("Discovery Finished")
         except Exception as ex:
-            self.addNotice({'discovery_failed': 'Discovery failed please check logs for a more detailed error.'})
+            self.poly.Notices['disc'] = 'Discovery failed please check logs for a more detailed error.'
             LOGGER.exception("Discovery failed with error %s", ex)
 
     def add_thermostat(self, location_id, location_name, thermostat, update):
@@ -78,7 +98,7 @@ class Controller(polyinterface.Controller):
         use_celsius = thermostat['units'].lower() != 'fahrenheit'
 
         LOGGER.debug('Adding thermostat with id {0} and name {1} and addr {2}'.format(t_device_id, t_name, t_addr))
-        self.addNode(Thermostat(self, t_addr, t_addr, t_name, self._api, location_id, t_device_id, use_celsius), update)
+        self.poly.addNode(Thermostat(self.poly, t_addr, t_addr, t_name, self._api, location_id, t_device_id, use_celsius), update)
 
         if 'groups' not in thermostat:
             return
@@ -98,7 +118,7 @@ class Controller(polyinterface.Controller):
 
                 if sensor_type == 'IndoorAirSensor' or sensor_type == 'Thermostat':
                     LOGGER.debug('Adding IndoorAirSensor with name {0} and addr {1} for thermostat {2}'.format(sensor_name, sensor_addr, t_addr))
-                    self.addNode(IndoorAirSensor(self, t_addr, sensor_addr, sensor_name, self._api, location_id, t_device_id, group_id, sensor.id, use_celsius))
+                    self.poly.addNode(IndoorAirSensor(self.poly, t_addr, sensor_addr, sensor_name, self._api, location_id, t_device_id, group_id, sensor.id, use_celsius))
 
     def delete(self):
         LOGGER.info('Honeywell Home NS Deleted')
@@ -106,49 +126,9 @@ class Controller(polyinterface.Controller):
     def stop(self):
         LOGGER.debug('Honeywell Home NS stopped.')
 
-    def check_params(self):
-        if 'client_id' in self.polyConfig['customParams']:
-            self._client_id = self.polyConfig['customParams']['client_id']
-        else:
-            LOGGER.error('check_params: client_id not defined in customParams, please add it.  Using {}'.format(self._client_id))
-
-        if 'client_secret' in self.polyConfig['customParams']:
-            self._client_secret = self.polyConfig['customParams']['client_secret']
-        else:
-            LOGGER.error('check_params: client_secret not defined in customParams, please add it.  Using {}'.format(self._client_secret))
-
-        if 'user_id' in self.polyConfig['customParams']:
-            self._user_id = self.polyConfig['customParams']['user_id']
-        else:
-            LOGGER.error('check_params: user_id not defined in customParams, please add it.  Using {}'.format(self._user_id))
-
-        # Make sure they are in the params
-        self.addCustomParam({'client_id': self._client_id, 'client_secret': self._client_secret, "user_id": self._user_id})
-
-        # Remove all existing notices
-        self.removeNoticesAll()
-        # Add a notice if they need to change the user/password from the default.
-        if self._client_id == "" or self._client_secret == "" or self._user_id == "":
-            self.addNotice({'mynotice': 'Please set proper client_id and client_secret in configuration page, and restart this nodeserver. See:<br />https://github.com/dbarentine/udi-honeywellhome-poly/blob/master/README.md'})
-            return False
-        else:
-            return True
-
-    def remove_notices_all(self, command):
-        LOGGER.info('remove_notices_all:')
-        # Remove all existing notices
-        self.removeNoticesAll()
-
-    def update_profile(self, command):
-        LOGGER.info('update_profile:')
-        st = self.poly.installprofile()
-        return st
-
     id = 'controller'
     commands = {
         'DISCOVER': discover,
-        'UPDATE_PROFILE': update_profile,
-        'REMOVE_NOTICES_ALL': remove_notices_all
     }
 
     drivers = [{'driver': 'ST', 'value': 0, 'uom': 2}]
@@ -156,9 +136,9 @@ class Controller(polyinterface.Controller):
 
 if __name__ == "__main__":
     try:
-        polyglot = polyinterface.Interface('HoneywellHome')
+        polyglot = udi_interface.Interface([])
         polyglot.start()
-        control = Controller(polyglot)
-        control.runForever()
+        Controller(polyglot, 'controller', 'controller', 'HoneywellHome')
+        polyglot.runForever()
     except (KeyboardInterrupt, SystemExit):
         sys.exit(0)
