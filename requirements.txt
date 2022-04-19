@@ -1,4 +1,4 @@
-udi_interface>=3.0.18
+udi_interface>=3.0.40
 
 oauthlib>=3.0.2
 requests_oauthlib>=1.2.0
