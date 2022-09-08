@@ -21,7 +21,7 @@ You will now see the create application screen.
 
 Set the App Name name to whatever you like.
 
-For the Callback URL use https://udi-honeywellhome-auth.azurewebsites.net. This is a web UI that will simplify the authorization part as well as retrieving the user ID. The code for this UI is here [udi-honeywellhome-auth](https://github.com/dbarentine/udi-honeywellhome-auth). This UI could be run locally as well you would just need to modify the callback url to use the localhost URL.
+For the Callback URL use https://udi-honeywellhome-auth.azurewebsites.net/auth. This is a web UI that will simplify the authorization part as well as retrieving the user ID. The code for this UI is here [udi-honeywellhome-auth](https://github.com/dbarentine/udi-honeywellhome-auth). This UI could be run locally as well you would just need to modify the callback url to use the localhost URL.
 
 When finished click the Save Changes button.
 
