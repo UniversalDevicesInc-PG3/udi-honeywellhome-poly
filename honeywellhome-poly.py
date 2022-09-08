@@ -137,7 +137,7 @@ class Controller(udi_interface.Node):
 if __name__ == "__main__":
     try:
         polyglot = udi_interface.Interface([])
-        polyglot.start('2.0.0')
+        polyglot.start('2.0.1')
         Controller(polyglot, 'controller', 'controller', 'HoneywellHome')
         polyglot.runForever()
     except (KeyboardInterrupt, SystemExit):
