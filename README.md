@@ -13,7 +13,7 @@ This project is a node server to integrate Honeywell Home thermostats into the U
 
 ## Requirements
 * [Honeywell Home](https://www.honeywellhome.com/) Wifi connected thermostat and Honeywell Home Login
-* [Honeywell Developer Account](https://developer.honeywell.com) Free Honeywell Home developer account.
+* [Honeywell Developer Account](https://developer.honeywellhome.com/) Free Honeywell Home developer account.
 
 ## Installation
 1. Go to the Polyglot Store in the UI and install.
